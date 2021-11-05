@@ -9,5 +9,6 @@ package Modelos;
  *
  * @author José Padilla
  */
-public class Persona {
+public class Usuario {
+    
 }
