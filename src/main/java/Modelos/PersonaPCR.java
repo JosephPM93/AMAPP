@@ -37,6 +37,12 @@ public class PersonaPCR {
         this.Fecha_realizada = Fecha_realizada;
     }
 
+    public PersonaPCR(int Persona_id, int Pcr_id, Date Fecha_realizada) {
+        this.Persona_id = Persona_id;
+        this.Pcr_id = Pcr_id;
+        this.Fecha_realizada = Fecha_realizada;
+    }
+    
     public PersonaPCR() {
     }
 

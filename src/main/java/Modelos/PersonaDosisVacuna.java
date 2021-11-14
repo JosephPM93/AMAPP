@@ -40,6 +40,13 @@ public class PersonaDosisVacuna {
         this.Fecha_puesta = Fecha_puesta;
     }
 
+    public PersonaDosisVacuna(int Persona_id, int Dosis_id, int Vacuna_id, Date Fecha_puesta) {
+        this.Persona_id = Persona_id;
+        this.Dosis_id = Dosis_id;
+        this.Vacuna_id = Vacuna_id;
+        this.Fecha_puesta = Fecha_puesta;
+    }
+
     public PersonaDosisVacuna() {
     }
 

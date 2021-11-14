@@ -33,7 +33,8 @@ public class Conexion {
                     .addAnnotatedClass(PersonaDosisVacuna.class)
                     .addAnnotatedClass(Usuario.class)
                     .addAnnotatedClass(Vacuna.class)
-                    .addAnnotatedClass(PersonaPCR.class).buildSessionFactory());
+                    .addAnnotatedClass(PersonaPCR.class)
+                    .buildSessionFactory());
             setSession(getSessionFactory().openSession());
 
         } catch (HibernateException e) {

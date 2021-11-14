@@ -55,6 +55,18 @@ public class Persona {
         this.Detalles = Detalles;
     }
 
+    public Persona(String Nombres, String Apellidos, String Dui, Date F_nacimiento, boolean Sexo, boolean Sintomas, boolean Recuperado, boolean Fallecido, String Detalles) {
+        this.Nombres = Nombres;
+        this.Apellidos = Apellidos;
+        this.Dui = Dui;
+        this.F_nacimiento = F_nacimiento;
+        this.Sexo = Sexo;
+        this.Sintomas = Sintomas;
+        this.Recuperado = Recuperado;
+        this.Fallecido = Fallecido;
+        this.Detalles = Detalles;
+    }
+    
     public Persona() {
     }
 
