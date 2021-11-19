@@ -25,7 +25,7 @@ public class CoreCRUDControlador {
     ============================================
     */
     
-    //Creacion de metodo select dosis
+    //Creacion de metodo select Dosis
     public List<Dosis> SelectDosis() {
         con.getSession().beginTransaction();
         List<Dosis> ListaDatos = con.getSession().createQuery("from dosis").getResultList();
@@ -39,13 +39,40 @@ public class CoreCRUDControlador {
         return ListaDatos;
     }
     
-    //Creacion de metodo select PCR
+    //Creacion de metodo select Persona
     public List<Persona> SelectPersona() {
         con.getSession().beginTransaction();
         List<Persona> ListaDatos = con.getSession().createQuery("from persona").getResultList();
         return ListaDatos;
     }
-
+    
+    //Creacion de metdo select para PersonaDosisVacuna
+    public List<PersonaDosisVacuna> SelectPersonaDosisVacuna() {
+        con.getSession().beginTransaction();
+        List<PersonaDosisVacuna> ListaDatos = con.getSession().createQuery("from personadosisvacuna").getResultList();
+        return ListaDatos;
+    }
+    
+    //Creacion de metodo select PersonaPCR
+    public List<PersonaPCR> SelectPersonaPCR() {
+        con.getSession().beginTransaction();
+        List<PersonaPCR> ListaDatos = con.getSession().createQuery("from personapcr").getResultList();
+        return ListaDatos;
+    }
+    
+    //Crecion de metodo select Usuario
+    public List<Usuario> SelectUsuario() {
+        con.getSession().beginTransaction();
+        List<Usuario> ListaDatos = con.getSession().createQuery("from usuario").getResultList();
+        return ListaDatos;
+    }
+    
+    //Creacion de metodo select vacuna
+    public List<Vacuna> SelectVacuna() {
+        con.getSession().beginTransaction();
+        List<Vacuna> ListaDatos = con.getSession().createQuery("from vacuna").getResultList();
+        return ListaDatos;
+    }
     
     /*
     ============================================
@@ -83,7 +110,7 @@ public class CoreCRUDControlador {
         }
     }
     
-    //Creacion de metodo Insert PCR
+    //Creacion de metodo Insert Persona
     public boolean Insert(Persona dato) {
         try {
             con.getSession().beginTransaction();
@@ -98,6 +125,65 @@ public class CoreCRUDControlador {
         }
     }
     
+    //Creacion de metodo Insert PersonaDosisVacuna
+    public boolean Insert(PersonaDosisVacuna dato) {
+        try {
+            con.getSession().beginTransaction();
+            con.getSession().save(dato);
+            con.getSession().getTransaction().commit();
+            con.getSession().close();
+
+            return true;
+
+        } catch (Exception e) {
+            return false;
+        }
+    }
+    
+    //Creacion de metodo Insert PersonaPCR
+    public boolean Insert(PersonaPCR dato) {
+        try {
+            con.getSession().beginTransaction();
+            con.getSession().save(dato);
+            con.getSession().getTransaction().commit();
+            con.getSession().close();
+
+            return true;
+
+        } catch (Exception e) {
+            return false;
+        }
+    }
+    
+    //Crecion de metodo Insert Usuario
+    public boolean Insert(Usuario dato) {
+        try {
+            con.getSession().beginTransaction();
+            con.getSession().save(dato);
+            con.getSession().getTransaction().commit();
+            con.getSession().close();
+
+            return true;
+
+        } catch (Exception e) {
+            return false;
+        }
+    }
+    
+    //Creacion de metodo Insert Vacuna
+    public boolean Insert(Vacuna dato) {
+        try {
+            con.getSession().beginTransaction();
+            con.getSession().save(dato);
+            con.getSession().getTransaction().commit();
+            con.getSession().close();
+
+            return true;
+
+        } catch (Exception e) {
+            return false;
+        }
+    }
     /*
     ============================================
         MÉTODOS UPDATE PARA TABLAS DE LA BD
@@ -135,8 +221,68 @@ public class CoreCRUDControlador {
         }
     }
     
-    //Creacion de metodo Update PCR
+    //Creacion de metodo Update Persona
     public boolean Update(Persona dato) {
+        try {
+            con.getSession().beginTransaction();
+            con.getSession().update(dato);
+            con.getSession().getTransaction().commit();
+            con.getSession().close();
+
+            return true;
+        
+        } catch (Exception e) {
+            return false;
+        }
+    }
+    
+    //Creacion de metodo Update PersonaDosisVacuna
+    public boolean Update(PersonaDosisVacuna dato) {
+        try {
+            con.getSession().beginTransaction();
+            con.getSession().update(dato);
+            con.getSession().getTransaction().commit();
+            con.getSession().close();
+
+            return true;
+        
+        } catch (Exception e) {
+            return false;
+        }
+    }
+    
+    //Creacion de metodo Update PersonaPCR
+    public boolean Update(PersonaPCR dato) {
+        try {
+            con.getSession().beginTransaction();
+            con.getSession().update(dato);
+            con.getSession().getTransaction().commit();
+            con.getSession().close();
+
+            return true;
+        
+        } catch (Exception e) {
+            return false;
+        }
+    }
+    
+    //Creacion de metodo Update Usuario
+    public boolean Update(Usuario dato) {
+        try {
+            con.getSession().beginTransaction();
+            con.getSession().update(dato);
+            con.getSession().getTransaction().commit();
+            con.getSession().close();
+
+            return true;
+        
+        } catch (Exception e) {
+            return false;
+        }
+    }
+    
+    //Creacion de metodo Update Vacuna
+    public boolean Update(Vacuna dato) {
         try {
             con.getSession().beginTransaction();
             con.getSession().update(dato);
@@ -186,8 +332,68 @@ public class CoreCRUDControlador {
         }
     }
     
-    //Creacion de metodo Delete PCR
+    //Creacion de metodo Delete Persona
     public boolean Delete(Persona dato) {
+        try {
+            con.getSession().beginTransaction();
+            con.getSession().delete(dato);
+            con.getSession().getTransaction().commit();
+            con.getSession().close();
+
+            return true;
+
+        } catch (Exception e) {
+            return false;
+        }
+    }
+    
+    //Creacion de metodo Delete PersonaDosisVacuna
+    public boolean Delete(PersonaDosisVacuna dato) {
+        try {
+            con.getSession().beginTransaction();
+            con.getSession().delete(dato);
+            con.getSession().getTransaction().commit();
+            con.getSession().close();
+
+            return true;
+
+        } catch (Exception e) {
+            return false;
+        }
+    }
+    
+    //Creacion de metodo Delete PesonaPCR
+    public boolean Delete(PersonaPCR dato) {
+        try {
+            con.getSession().beginTransaction();
+            con.getSession().delete(dato);
+            con.getSession().getTransaction().commit();
+            con.getSession().close();
+
+            return true;
+
+        } catch (Exception e) {
+            return false;
+        }
+    }
+    
+    //Creacion de metodo Delete Usuario
+    public boolean Delete(Usuario dato) {
+        try {
+            con.getSession().beginTransaction();
+            con.getSession().delete(dato);
+            con.getSession().getTransaction().commit();
+            con.getSession().close();
+
+            return true;
+
+        } catch (Exception e) {
+            return false;
+        }
+    }
+    
+    //Creacion de metodo Delete Vacuna
+    public boolean Delete(Vacuna dato) {
         try {
             con.getSession().beginTransaction();
             con.getSession().delete(dato);
