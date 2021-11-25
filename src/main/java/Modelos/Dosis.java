@@ -5,7 +5,6 @@
  */
 package Modelos;
 
-import java.sql.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -65,6 +64,9 @@ public class Dosis {
         this.Nombre = Nombre;
     }
     
-    
+    @Override
+    public String toString() {
+        return Nombre;
+    }
 
 }

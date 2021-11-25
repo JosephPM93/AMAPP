@@ -27,50 +27,64 @@ public class CoreCRUDControlador {
     
     //Creacion de metodo select Dosis
     public List<Dosis> SelectDosis() {
+        con.setSession(con.getSessionFactory().openSession());
         con.getSession().beginTransaction();
         List<Dosis> ListaDatos = con.getSession().createQuery("from dosis").getResultList();
+        con.getSession().close();
         return ListaDatos;
     }
     
     //Creacion de metodo select PCR
     public List<PCR> SelectPCR() {
+        con.setSession(con.getSessionFactory().openSession());
         con.getSession().beginTransaction();
         List<PCR> ListaDatos = con.getSession().createQuery("from pcr").getResultList();
+        con.getSession().close();
         return ListaDatos;
     }
     
     //Creacion de metodo select Persona
     public List<Persona> SelectPersona() {
+        con.setSession(con.getSessionFactory().openSession());
         con.getSession().beginTransaction();
-        List<Persona> ListaDatos = con.getSession().createQuery("from persona").getResultList();
+        List<Persona> ListaDatos = con.getSession().createQuery("from personas").getResultList();
+        con.getSession().close();
         return ListaDatos;
     }
     
     //Creacion de metdo select para PersonaDosisVacuna
     public List<PersonaDosisVacuna> SelectPersonaDosisVacuna() {
+        con.setSession(con.getSessionFactory().openSession());
         con.getSession().beginTransaction();
-        List<PersonaDosisVacuna> ListaDatos = con.getSession().createQuery("from personadosisvacuna").getResultList();
+        List<PersonaDosisVacuna> ListaDatos = con.getSession().createQuery("from persona_dosis_vacuna").getResultList();
+        con.getSession().close();
         return ListaDatos;
     }
     
     //Creacion de metodo select PersonaPCR
     public List<PersonaPCR> SelectPersonaPCR() {
+        con.setSession(con.getSessionFactory().openSession());
         con.getSession().beginTransaction();
-        List<PersonaPCR> ListaDatos = con.getSession().createQuery("from personapcr").getResultList();
+        List<PersonaPCR> ListaDatos = con.getSession().createQuery("from persona_pcr").getResultList();
+        con.getSession().close();
         return ListaDatos;
     }
     
     //Crecion de metodo select Usuario
     public List<Usuario> SelectUsuario() {
+        con.setSession(con.getSessionFactory().openSession());
         con.getSession().beginTransaction();
         List<Usuario> ListaDatos = con.getSession().createQuery("from usuario").getResultList();
+        con.getSession().close();
         return ListaDatos;
     }
     
     //Creacion de metodo select vacuna
     public List<Vacuna> SelectVacuna() {
+        con.setSession(con.getSessionFactory().openSession());
         con.getSession().beginTransaction();
         List<Vacuna> ListaDatos = con.getSession().createQuery("from vacuna").getResultList();
+        con.getSession().close();
         return ListaDatos;
     }
     

@@ -64,4 +64,8 @@ public class PCR {
         this.Nombre = Nombre;
     }
     
+    @Override
+    public String toString() {
+        return Nombre;
+    }
 }

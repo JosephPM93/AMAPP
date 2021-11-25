@@ -35,6 +35,7 @@ public class Conexion {
                     .addAnnotatedClass(Vacuna.class)
                     .addAnnotatedClass(PersonaPCR.class)
                     .buildSessionFactory());
+            
             setSession(getSessionFactory().openSession());
 
         } catch (HibernateException e) {
@@ -75,4 +76,5 @@ public class Conexion {
     public static void setSession(Session aSession) {
         Session = aSession;
     }
+    
 }

@@ -5,10 +5,18 @@
  */
 package Controladores;
 
+import Vistas.PrincipalVista;
+
 /**
  *
  * @author José Padilla
  */
 public class PrincipalControlador {
-    
+
+    static CoreCRUDControlador core = new CoreCRUDControlador();
+
+    public static void main(String[] args) {
+        new PrincipalVista(core.SelectVacuna(), core.SelectPCR(), core.SelectDosis(), core.SelectPersona()).setVisible(true);
+        
+    }
 }
