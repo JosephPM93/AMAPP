@@ -21,6 +21,10 @@ public class Validaciones {
     public boolean EsVacio(JDateChooser jdc) {
         return jdc.getDate() == null;
     }
+    
+    public boolean EsVacio(String text) {
+        return text.trim().equals("");
+    }
 
     public boolean JTextField_EsNumeroDecimal(JTextField jtf) {
         try {

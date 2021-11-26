@@ -6,6 +6,8 @@
 package Vistas;
 
 import Controladores.CalculosControlador;
+import Controladores.CoreCRUDControlador;
+import Libs.Validaciones;
 import Modelos.Dosis;
 import Modelos.PCR;
 import Modelos.Persona;
@@ -45,6 +47,10 @@ public class PrincipalVista extends javax.swing.JFrame {
     DefaultTableModel JTableModelPersonas;
 
     RegistroFormularioVista rfv;
+
+    Validaciones valid = new Validaciones();
+
+    CoreCRUDControlador coreCrud = new CoreCRUDControlador();
 
     /**
      * Creates new form MainView
@@ -578,15 +584,48 @@ public class PrincipalVista extends javax.swing.JFrame {
         rfv.setModal(true);
         rfv.enableInputMethods(true);
         rfv.setVisible(true);
-        
+
     }//GEN-LAST:event_JBTN_nuevoActionPerformed
 
     private void JBTN_NuevaDosisActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JBTN_NuevaDosisActionPerformed
         // TODO add your handling code here:
+        String NombreDosis = "";
+        while (true) {
+            NombreDosis = JOptionPane.showInputDialog(null, "Ingrese el nombre de la Dosis", "Ingresar datos", JOptionPane.QUESTION_MESSAGE);
+            if (!valid.EsVacio(NombreDosis)) {
+                Dosis NuevaDosis = new Dosis(NombreDosis);
+                if (coreCrud.Insert(NuevaDosis)) {
+                    JOptionPane.showMessageDialog(null, "Datos guardados correctamente", "Ok", JOptionPane.INFORMATION_MESSAGE);
+                } else {
+                    JOptionPane.showMessageDialog(null, "¡Hubo un problema!", "Error", JOptionPane.ERROR_MESSAGE);
+                }
+                break;
+            }
+        }
     }//GEN-LAST:event_JBTN_NuevaDosisActionPerformed
 
     private void JBTN_ModificarDosisActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JBTN_ModificarDosisActionPerformed
         // TODO add your handling code here:
+        if (this.JList_Dosis.getSelectedIndex() != -1 && this.JList_Dosis.getSelectedIndex() != 0) {
+            String NombreDosis = "";
+            while (true) {
+                NombreDosis = JOptionPane.showInputDialog(null, "Ingrese el nombre de la Dosis", "Ingresar datos", JOptionPane.QUESTION_MESSAGE);
+                if (!valid.EsVacio(NombreDosis)) {
+                    Dosis NuevaDosis = this.ListaDosis.get(this.JList_Dosis.getSelectedIndex()+1);
+                    NuevaDosis.setNombre(NombreDosis);
+                    if (coreCrud.Update(NuevaDosis)) {
+                        JOptionPane.showMessageDialog(null, "Datos guardados correctamente", "Ok", JOptionPane.INFORMATION_MESSAGE);
+                    } else {
+                        JOptionPane.showMessageDialog(null, "¡Hubo un problema!", "Error", JOptionPane.ERROR_MESSAGE);
+                    }
+                    break;
+                } else {
+                    JOptionPane.showMessageDialog(null, "¡Valor ingresado no válido!", "Error", JOptionPane.WARNING_MESSAGE);
+                }
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "¡No se ha seleccionado nada!", "Error", JOptionPane.WARNING_MESSAGE);
+        }
     }//GEN-LAST:event_JBTN_ModificarDosisActionPerformed
 
     private void JBTN_EliminarDosisActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JBTN_EliminarDosisActionPerformed
@@ -595,6 +634,7 @@ public class PrincipalVista extends javax.swing.JFrame {
 
     private void JBTN_NuevaPCRActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JBTN_NuevaPCRActionPerformed
         // TODO add your handling code here:
+
     }//GEN-LAST:event_JBTN_NuevaPCRActionPerformed
 
     private void JBTN_ModificarPCRActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JBTN_ModificarPCRActionPerformed
