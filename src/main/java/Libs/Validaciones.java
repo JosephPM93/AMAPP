@@ -5,6 +5,7 @@
  */
 package Libs;
 
+import com.toedter.calendar.JDateChooser;
 import javax.swing.JTextField;
 
 /**
@@ -13,8 +14,12 @@ import javax.swing.JTextField;
  */
 public class Validaciones {
 
-    public boolean JTextField_EsVacio(JTextField jtf) {
+    public boolean EsVacio(JTextField jtf) {
         return jtf.getText().trim().equals("");
+    }
+    
+    public boolean EsVacio(JDateChooser jdc) {
+        return jdc.getDate() == null;
     }
 
     public boolean JTextField_EsNumeroDecimal(JTextField jtf) {

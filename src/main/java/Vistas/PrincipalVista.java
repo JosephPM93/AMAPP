@@ -5,6 +5,7 @@
  */
 package Vistas;
 
+import Controladores.CalculosControlador;
 import Modelos.Dosis;
 import Modelos.PCR;
 import Modelos.Persona;
@@ -14,10 +15,10 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.util.ArrayList;
 import java.util.List;
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
+import javax.swing.JDialog;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
@@ -43,6 +44,8 @@ public class PrincipalVista extends javax.swing.JFrame {
 
     DefaultTableModel JTableModelPersonas;
 
+    RegistroFormularioVista rfv;
+
     /**
      * Creates new form MainView
      */
@@ -63,68 +66,16 @@ public class PrincipalVista extends javax.swing.JFrame {
 
     private void inicializarDatos() {
 
-        this.JList_Vacuna.setModel(rellenarListaVacuna(JListModelVacunas, ListaVacunas));
-        this.JList_PCR.setModel(rellenarListaPCR(JListModelPCR, ListaPCR));
-        this.JList_Dosis.setModel(rellenarListaDosis(JListModelDosis, ListaDosis));
+        this.JList_Vacuna.setModel(CalculosControlador.rellenarListaVacuna(JListModelVacunas, ListaVacunas));
+        this.JList_PCR.setModel(CalculosControlador.rellenarListaPCR(JListModelPCR, ListaPCR));
+        this.JList_Dosis.setModel(CalculosControlador.rellenarListaDosis(JListModelDosis, ListaDosis));
 
-        this.JTable_Personas.setModel(rellenarTablaPersonas(JTableModelPersonas, ListaPersonas));
+        this.JTable_Personas.setModel(CalculosControlador.rellenarTablaPersonas(JTableModelPersonas, ListaPersonas));
         this.JTable_Personas.setDefaultEditor(Object.class, null);
         this.JTable_Personas.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 
         TableCellRenderer buttonRenderer = new JTableButtonRenderer();
         JTable_Personas.getColumn("Detalles").setCellRenderer(buttonRenderer);
-    }
-
-    private DefaultListModel rellenarListaVacuna(DefaultListModel modelo, List<Vacuna> datos) {
-        modelo = new DefaultListModel();
-        for (Vacuna d : datos) {
-            modelo.addElement(d.toString());
-        }
-        return modelo;
-    }
-
-    private DefaultListModel rellenarListaPCR(DefaultListModel modelo, List<PCR> datos) {
-        modelo = new DefaultListModel();
-        for (PCR d : datos) {
-            modelo.addElement(d.toString());
-        }
-        return modelo;
-    }
-
-    private DefaultListModel rellenarListaDosis(DefaultListModel modelo, List<Dosis> datos) {
-        modelo = new DefaultListModel();
-        for (Dosis d : datos) {
-            modelo.addElement(d.toString());
-        }
-        return modelo;
-    }
-
-    private DefaultTableModel rellenarTablaPersonas(DefaultTableModel modelo, List<Persona> datos) {
-        modelo = new DefaultTableModel();
-
-        Object Titulos[] = {"Id", "N", "Nombre Completo", "DUI/DUI Responsable", "Edad", "Sexo", "Última dosis", "Prueba PCR", "Estado", "Detalles"};
-        modelo.setColumnIdentifiers(Titulos);
-        modelo.getDataVector().removeAllElements();
-
-        try {
-            int i = 1;
-            for (Persona d : datos) {
-                Object rows[] = {
-                    d.getId(),
-                    i,
-                    d.getNombres() + " " + d.getApellidos(),
-                    d.getDui(),
-                    d.isSexo() ? "Masculino" : "Femenino",
-                    d.isFallecido() ? "Fallecido" : d.isRecuperado() ? "Recuperado" : d.isSintomas() ? "Con síntomas" : "Sin síntomas",
-                    "Click para ver",};
-                modelo.addRow(rows);
-                i++;
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        return modelo;
     }
 
     public static class JTableModel extends AbstractTableModel {
@@ -240,21 +191,21 @@ public class PrincipalVista extends javax.swing.JFrame {
         jPanel4 = new javax.swing.JPanel();
         jScrollPane3 = new javax.swing.JScrollPane();
         JList_PCR = new javax.swing.JList<>();
-        jButton6 = new javax.swing.JButton();
-        jButton5 = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
+        JBTN_NuevaPCR = new javax.swing.JButton();
+        JBTN_ModificarPCR = new javax.swing.JButton();
+        JBTN_EliminarPCR = new javax.swing.JButton();
         jPanel5 = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         JList_Dosis = new javax.swing.JList<>();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
+        JBTN_NuevaDosis = new javax.swing.JButton();
+        JBTN_ModificarDosis = new javax.swing.JButton();
+        JBTN_EliminarDosis = new javax.swing.JButton();
         jPanel7 = new javax.swing.JPanel();
         jScrollPane5 = new javax.swing.JScrollPane();
         JList_Vacuna = new javax.swing.JList<>();
-        jButton13 = new javax.swing.JButton();
-        jButton14 = new javax.swing.JButton();
-        jButton15 = new javax.swing.JButton();
+        JBTN_NuevaVacuna = new javax.swing.JButton();
+        JBTN_ModificarVacuna = new javax.swing.JButton();
+        JBTN_EliminarVacuna = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -285,6 +236,11 @@ public class PrincipalVista extends javax.swing.JFrame {
         jScrollPane1.setViewportView(JTable_Personas);
 
         JBTN_nuevo.setText("Nuevo");
+        JBTN_nuevo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                JBTN_nuevoActionPerformed(evt);
+            }
+        });
 
         JBTN_modificar.setText("Modificar");
 
@@ -382,13 +338,35 @@ public class PrincipalVista extends javax.swing.JFrame {
             public int getSize() { return strings.length; }
             public String getElementAt(int i) { return strings[i]; }
         });
+        JList_PCR.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
+            public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
+                JList_PCRValueChanged(evt);
+            }
+        });
         jScrollPane3.setViewportView(JList_PCR);
 
-        jButton6.setText("Nuevo");
+        JBTN_NuevaPCR.setText("Nuevo");
+        JBTN_NuevaPCR.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                JBTN_NuevaPCRActionPerformed(evt);
+            }
+        });
 
-        jButton5.setText("Editar");
+        JBTN_ModificarPCR.setText("Editar");
+        JBTN_ModificarPCR.setEnabled(false);
+        JBTN_ModificarPCR.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                JBTN_ModificarPCRActionPerformed(evt);
+            }
+        });
 
-        jButton4.setText("Eliminar");
+        JBTN_EliminarPCR.setText("Eliminar");
+        JBTN_EliminarPCR.setEnabled(false);
+        JBTN_EliminarPCR.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                JBTN_EliminarPCRActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
@@ -399,9 +377,9 @@ public class PrincipalVista extends javax.swing.JFrame {
                 .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButton6)
-                    .addComponent(jButton5)
-                    .addComponent(jButton4))
+                    .addComponent(JBTN_NuevaPCR)
+                    .addComponent(JBTN_ModificarPCR)
+                    .addComponent(JBTN_EliminarPCR))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel4Layout.setVerticalGroup(
@@ -410,11 +388,11 @@ public class PrincipalVista extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel4Layout.createSequentialGroup()
-                        .addComponent(jButton6)
+                        .addComponent(JBTN_NuevaPCR)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton5)
+                        .addComponent(JBTN_ModificarPCR)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(JBTN_EliminarPCR, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -426,13 +404,35 @@ public class PrincipalVista extends javax.swing.JFrame {
             public int getSize() { return strings.length; }
             public String getElementAt(int i) { return strings[i]; }
         });
+        JList_Dosis.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
+            public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
+                JList_DosisValueChanged(evt);
+            }
+        });
         jScrollPane2.setViewportView(JList_Dosis);
 
-        jButton1.setText("Nuevo");
+        JBTN_NuevaDosis.setText("Nuevo");
+        JBTN_NuevaDosis.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                JBTN_NuevaDosisActionPerformed(evt);
+            }
+        });
 
-        jButton2.setText("Editar");
+        JBTN_ModificarDosis.setText("Editar");
+        JBTN_ModificarDosis.setEnabled(false);
+        JBTN_ModificarDosis.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                JBTN_ModificarDosisActionPerformed(evt);
+            }
+        });
 
-        jButton3.setText("Eliminar");
+        JBTN_EliminarDosis.setText("Eliminar");
+        JBTN_EliminarDosis.setEnabled(false);
+        JBTN_EliminarDosis.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                JBTN_EliminarDosisActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
@@ -443,9 +443,9 @@ public class PrincipalVista extends javax.swing.JFrame {
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButton1)
-                    .addComponent(jButton2)
-                    .addComponent(jButton3))
+                    .addComponent(JBTN_NuevaDosis)
+                    .addComponent(JBTN_ModificarDosis)
+                    .addComponent(JBTN_EliminarDosis))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel5Layout.setVerticalGroup(
@@ -455,11 +455,11 @@ public class PrincipalVista extends javax.swing.JFrame {
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel5Layout.createSequentialGroup()
-                        .addComponent(jButton1)
+                        .addComponent(JBTN_NuevaDosis)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton2)
+                        .addComponent(JBTN_ModificarDosis)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(JBTN_EliminarDosis, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -470,13 +470,35 @@ public class PrincipalVista extends javax.swing.JFrame {
             public int getSize() { return strings.length; }
             public String getElementAt(int i) { return strings[i]; }
         });
+        JList_Vacuna.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
+            public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
+                JList_VacunaValueChanged(evt);
+            }
+        });
         jScrollPane5.setViewportView(JList_Vacuna);
 
-        jButton13.setText("Nuevo");
+        JBTN_NuevaVacuna.setText("Nuevo");
+        JBTN_NuevaVacuna.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                JBTN_NuevaVacunaActionPerformed(evt);
+            }
+        });
 
-        jButton14.setText("Editar");
+        JBTN_ModificarVacuna.setText("Editar");
+        JBTN_ModificarVacuna.setEnabled(false);
+        JBTN_ModificarVacuna.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                JBTN_ModificarVacunaActionPerformed(evt);
+            }
+        });
 
-        jButton15.setText("Eliminar");
+        JBTN_EliminarVacuna.setText("Eliminar");
+        JBTN_EliminarVacuna.setEnabled(false);
+        JBTN_EliminarVacuna.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                JBTN_EliminarVacunaActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
         jPanel7.setLayout(jPanel7Layout);
@@ -487,9 +509,9 @@ public class PrincipalVista extends javax.swing.JFrame {
                 .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButton13)
-                    .addComponent(jButton14)
-                    .addComponent(jButton15))
+                    .addComponent(JBTN_NuevaVacuna)
+                    .addComponent(JBTN_ModificarVacuna)
+                    .addComponent(JBTN_EliminarVacuna))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel7Layout.setVerticalGroup(
@@ -498,11 +520,11 @@ public class PrincipalVista extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel7Layout.createSequentialGroup()
-                        .addComponent(jButton13)
+                        .addComponent(JBTN_NuevaVacuna)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton14)
+                        .addComponent(JBTN_ModificarVacuna)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton15, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(JBTN_EliminarVacuna, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -550,45 +572,94 @@ public class PrincipalVista extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Windows".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(PrincipalVista.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(PrincipalVista.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(PrincipalVista.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(PrincipalVista.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
+    private void JBTN_nuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JBTN_nuevoActionPerformed
+        // TODO add your handling code here:
+        JDialog rfv = new RegistroFormularioVista(ListaVacunas, ListaPCR, ListaDosis);
+        rfv.setModal(true);
+        rfv.enableInputMethods(true);
+        rfv.setVisible(true);
+        
+    }//GEN-LAST:event_JBTN_nuevoActionPerformed
 
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new PrincipalVista().setVisible(true);
-            }
-        });
-    }
+    private void JBTN_NuevaDosisActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JBTN_NuevaDosisActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_JBTN_NuevaDosisActionPerformed
+
+    private void JBTN_ModificarDosisActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JBTN_ModificarDosisActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_JBTN_ModificarDosisActionPerformed
+
+    private void JBTN_EliminarDosisActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JBTN_EliminarDosisActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_JBTN_EliminarDosisActionPerformed
+
+    private void JBTN_NuevaPCRActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JBTN_NuevaPCRActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_JBTN_NuevaPCRActionPerformed
+
+    private void JBTN_ModificarPCRActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JBTN_ModificarPCRActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_JBTN_ModificarPCRActionPerformed
+
+    private void JBTN_EliminarPCRActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JBTN_EliminarPCRActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_JBTN_EliminarPCRActionPerformed
+
+    private void JBTN_NuevaVacunaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JBTN_NuevaVacunaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_JBTN_NuevaVacunaActionPerformed
+
+    private void JBTN_ModificarVacunaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JBTN_ModificarVacunaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_JBTN_ModificarVacunaActionPerformed
+
+    private void JBTN_EliminarVacunaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JBTN_EliminarVacunaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_JBTN_EliminarVacunaActionPerformed
+
+    private void JList_DosisValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_JList_DosisValueChanged
+        // TODO add your handling code here:
+        if (!(this.JList_Dosis.isSelectionEmpty() || this.JList_Dosis.isSelectedIndex(0))) {
+            this.JBTN_ModificarDosis.setEnabled(true);
+            this.JBTN_EliminarDosis.setEnabled(true);
+        } else {
+            this.JBTN_ModificarDosis.setEnabled(false);
+            this.JBTN_EliminarDosis.setEnabled(false);
+        }
+    }//GEN-LAST:event_JList_DosisValueChanged
+
+    private void JList_PCRValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_JList_PCRValueChanged
+        // TODO add your handling code here:
+        if (!(this.JList_PCR.isSelectionEmpty() || this.JList_PCR.isSelectedIndex(0))) {
+            this.JBTN_ModificarPCR.setEnabled(true);
+            this.JBTN_EliminarPCR.setEnabled(true);
+        } else {
+            this.JBTN_ModificarPCR.setEnabled(false);
+            this.JBTN_EliminarPCR.setEnabled(false);
+        }
+    }//GEN-LAST:event_JList_PCRValueChanged
+
+    private void JList_VacunaValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_JList_VacunaValueChanged
+        // TODO add your handling code here:
+        if (!(this.JList_Vacuna.isSelectionEmpty() || this.JList_Vacuna.isSelectedIndex(0))) {
+            this.JBTN_ModificarVacuna.setEnabled(true);
+            this.JBTN_EliminarVacuna.setEnabled(true);
+        } else {
+            this.JBTN_ModificarVacuna.setEnabled(false);
+            this.JBTN_EliminarVacuna.setEnabled(false);
+        }
+    }//GEN-LAST:event_JList_VacunaValueChanged
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton JBTN_EliminarDosis;
+    private javax.swing.JButton JBTN_EliminarPCR;
+    private javax.swing.JButton JBTN_EliminarVacuna;
+    private javax.swing.JButton JBTN_ModificarDosis;
+    private javax.swing.JButton JBTN_ModificarPCR;
+    private javax.swing.JButton JBTN_ModificarVacuna;
+    private javax.swing.JButton JBTN_NuevaDosis;
+    private javax.swing.JButton JBTN_NuevaPCR;
+    private javax.swing.JButton JBTN_NuevaVacuna;
     private javax.swing.JButton JBTN_elminar;
     private javax.swing.JButton JBTN_modificar;
     private javax.swing.JButton JBTN_nuevo;
@@ -603,15 +674,6 @@ public class PrincipalVista extends javax.swing.JFrame {
     private javax.swing.JTabbedPane JTBP_pestanias;
     private javax.swing.JTextField JTF_buscador;
     private javax.swing.JTable JTable_Personas;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton13;
-    private javax.swing.JButton jButton14;
-    private javax.swing.JButton jButton15;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton5;
-    private javax.swing.JButton jButton6;
     private javax.swing.JButton jButton7;
     private javax.swing.JButton jButton8;
     private javax.swing.JButton jButton9;

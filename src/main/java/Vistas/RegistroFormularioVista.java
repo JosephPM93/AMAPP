@@ -5,11 +5,30 @@
  */
 package Vistas;
 
+import Controladores.CalculosControlador;
+import Libs.Validaciones;
+import Modelos.Dosis;
+import Modelos.PCR;
+import Modelos.Vacuna;
+import java.util.List;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author José Padilla
  */
-public class RegistroFormularioVista extends javax.swing.JFrame {
+public class RegistroFormularioVista extends javax.swing.JDialog {
+
+    List<Vacuna> ListaVacunas;
+    List<PCR> ListaPCR;
+    List<Dosis> ListaDosis;
+
+    DefaultComboBoxModel ComboBoxModelVacuna;
+    DefaultComboBoxModel ComboBoxModelPCR;
+    DefaultComboBoxModel ComboBoxModelDosis;
+
+    Validaciones valid = new Validaciones();
 
     /**
      * Creates new form RegistroFormularioVista
@@ -18,6 +37,35 @@ public class RegistroFormularioVista extends javax.swing.JFrame {
         initComponents();
         this.setLocationRelativeTo(null);
         this.setResizable(false);
+    }
+
+    public RegistroFormularioVista(List<Vacuna> ListaVacunas, List<PCR> ListaPCR, List<Dosis> ListaDosis) {
+        initComponents();
+        this.setLocationRelativeTo(null);
+        this.setTitle("Registrar nuevo caso");
+        this.setResizable(false);
+
+        this.ListaVacunas = ListaVacunas;
+        this.ListaPCR = ListaPCR;
+        this.ListaDosis = ListaDosis;
+        inicializarDatos();
+    }
+
+    private void inicializarDatos() {
+        this.JComboBox_Vacuna.setModel(CalculosControlador.rellenarListaVacuna(ComboBoxModelVacuna, ListaVacunas));
+        this.JComboBox_PCR.setModel(CalculosControlador.rellenarListaPCR(ComboBoxModelPCR, ListaPCR));
+        this.JComboBox_Dosis.setModel(CalculosControlador.rellenarListaDosis(ComboBoxModelDosis, ListaDosis));
+    }
+
+    private boolean esValidoFormulario() {
+        return !valid.EsVacio(this.JTF_Nombres)
+                && valid.EsVacio(this.JTF_Apellidos)
+                && valid.EsVacio(this.JTF_DUI)
+                && valid.EsVacio(this.JDC_FechaNacimiento)
+                && (this.JRBTN_F.isSelected() || this.JRBTN_M.isSelected())
+                && (this.JComboBox_Dosis.getSelectedIndex() != 0)
+                && (this.JComboBox_PCR.getSelectedIndex() != 0)
+                && (this.JComboBox_Vacuna.getSelectedIndex() != 0);
     }
 
     /**
@@ -34,30 +82,32 @@ public class RegistroFormularioVista extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        JTF_Nombres = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
-        jTextField2 = new javax.swing.JTextField();
+        JTF_Apellidos = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
-        jTextField3 = new javax.swing.JTextField();
+        JTF_DUI = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
-        jDateChooser1 = new com.toedter.calendar.JDateChooser();
+        JDC_FechaNacimiento = new com.toedter.calendar.JDateChooser();
         jLabel5 = new javax.swing.JLabel();
         jPanel4 = new javax.swing.JPanel();
-        jRadioButton1 = new javax.swing.JRadioButton();
-        jRadioButton2 = new javax.swing.JRadioButton();
+        JRBTN_F = new javax.swing.JRadioButton();
+        JRBTN_M = new javax.swing.JRadioButton();
         jPanel3 = new javax.swing.JPanel();
         jLabel6 = new javax.swing.JLabel();
-        jComboBox1 = new javax.swing.JComboBox<>();
+        JComboBox_PCR = new javax.swing.JComboBox<>();
         jLabel7 = new javax.swing.JLabel();
-        jCheckBox1 = new javax.swing.JCheckBox();
+        JCB_Sintomas = new javax.swing.JCheckBox();
         jLabel8 = new javax.swing.JLabel();
-        jComboBox2 = new javax.swing.JComboBox<>();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        JComboBox_Dosis = new javax.swing.JComboBox<>();
+        jLabel9 = new javax.swing.JLabel();
+        JComboBox_Vacuna = new javax.swing.JComboBox<>();
+        JBTN_Cancelar = new javax.swing.JButton();
+        JBTN_Guardar = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jTextArea1 = new javax.swing.JTextArea();
+        JTA_DatosExtras = new javax.swing.JTextArea();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Datos personales"));
         jPanel2.setLayout(new java.awt.GridBagLayout());
@@ -74,7 +124,7 @@ public class RegistroFormularioVista extends javax.swing.JFrame {
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.weightx = 2.0;
         gridBagConstraints.insets = new java.awt.Insets(2, 0, 2, 0);
-        jPanel2.add(jTextField1, gridBagConstraints);
+        jPanel2.add(JTF_Nombres, gridBagConstraints);
 
         jLabel2.setText("Apellido(s)");
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -90,7 +140,7 @@ public class RegistroFormularioVista extends javax.swing.JFrame {
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.weightx = 2.0;
         gridBagConstraints.insets = new java.awt.Insets(2, 0, 2, 0);
-        jPanel2.add(jTextField2, gridBagConstraints);
+        jPanel2.add(JTF_Apellidos, gridBagConstraints);
 
         jLabel3.setText("DUI");
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -106,7 +156,7 @@ public class RegistroFormularioVista extends javax.swing.JFrame {
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.weightx = 2.0;
         gridBagConstraints.insets = new java.awt.Insets(2, 0, 2, 0);
-        jPanel2.add(jTextField3, gridBagConstraints);
+        jPanel2.add(JTF_DUI, gridBagConstraints);
 
         jLabel4.setText("F. Nac.");
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -122,7 +172,7 @@ public class RegistroFormularioVista extends javax.swing.JFrame {
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.weightx = 2.0;
         gridBagConstraints.insets = new java.awt.Insets(2, 0, 2, 0);
-        jPanel2.add(jDateChooser1, gridBagConstraints);
+        jPanel2.add(JDC_FechaNacimiento, gridBagConstraints);
 
         jLabel5.setText("Sexo");
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -133,11 +183,11 @@ public class RegistroFormularioVista extends javax.swing.JFrame {
         gridBagConstraints.insets = new java.awt.Insets(0, 4, 0, 4);
         jPanel2.add(jLabel5, gridBagConstraints);
 
-        buttonGroup1.add(jRadioButton1);
-        jRadioButton1.setText("F");
+        buttonGroup1.add(JRBTN_F);
+        JRBTN_F.setText("F");
 
-        buttonGroup1.add(jRadioButton2);
-        jRadioButton2.setText("M");
+        buttonGroup1.add(JRBTN_M);
+        JRBTN_M.setText("M");
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
@@ -145,9 +195,9 @@ public class RegistroFormularioVista extends javax.swing.JFrame {
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jRadioButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(JRBTN_F, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jRadioButton2)
+                .addComponent(JRBTN_M)
                 .addContainerGap(176, Short.MAX_VALUE))
         );
         jPanel4Layout.setVerticalGroup(
@@ -155,8 +205,8 @@ public class RegistroFormularioVista extends javax.swing.JFrame {
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jRadioButton1)
-                    .addComponent(jRadioButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(JRBTN_F)
+                    .addComponent(JRBTN_M, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -179,14 +229,14 @@ public class RegistroFormularioVista extends javax.swing.JFrame {
         gridBagConstraints.insets = new java.awt.Insets(0, 4, 0, 4);
         jPanel3.add(jLabel6, gridBagConstraints);
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        JComboBox_PCR.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 0;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.weightx = 2.0;
         gridBagConstraints.insets = new java.awt.Insets(2, 0, 2, 0);
-        jPanel3.add(jComboBox1, gridBagConstraints);
+        jPanel3.add(JComboBox_PCR, gridBagConstraints);
 
         jLabel7.setText("Síntomas");
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -201,7 +251,7 @@ public class RegistroFormularioVista extends javax.swing.JFrame {
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.weightx = 2.0;
         gridBagConstraints.insets = new java.awt.Insets(2, 0, 2, 0);
-        jPanel3.add(jCheckBox1, gridBagConstraints);
+        jPanel3.add(JCB_Sintomas, gridBagConstraints);
 
         jLabel8.setText("Dósis");
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -212,23 +262,51 @@ public class RegistroFormularioVista extends javax.swing.JFrame {
         gridBagConstraints.insets = new java.awt.Insets(0, 4, 0, 4);
         jPanel3.add(jLabel8, gridBagConstraints);
 
-        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        JComboBox_Dosis.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.weightx = 2.0;
         gridBagConstraints.insets = new java.awt.Insets(2, 0, 2, 0);
-        jPanel3.add(jComboBox2, gridBagConstraints);
+        jPanel3.add(JComboBox_Dosis, gridBagConstraints);
 
-        jButton1.setText("Cancelar");
+        jLabel9.setText("Vacuna");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 3;
+        gridBagConstraints.ipadx = 10;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
+        gridBagConstraints.insets = new java.awt.Insets(0, 4, 0, 4);
+        jPanel3.add(jLabel9, gridBagConstraints);
 
-        jButton2.setText("Guardar");
+        JComboBox_Vacuna.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 3;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.weightx = 2.0;
+        gridBagConstraints.insets = new java.awt.Insets(2, 0, 2, 0);
+        jPanel3.add(JComboBox_Vacuna, gridBagConstraints);
 
-        jTextArea1.setColumns(20);
-        jTextArea1.setRows(5);
-        jTextArea1.setBorder(javax.swing.BorderFactory.createTitledBorder("Datos extras"));
-        jScrollPane2.setViewportView(jTextArea1);
+        JBTN_Cancelar.setText("Cancelar");
+        JBTN_Cancelar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                JBTN_CancelarActionPerformed(evt);
+            }
+        });
+
+        JBTN_Guardar.setText("Guardar");
+        JBTN_Guardar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                JBTN_GuardarActionPerformed(evt);
+            }
+        });
+
+        JTA_DatosExtras.setColumns(20);
+        JTA_DatosExtras.setRows(5);
+        JTA_DatosExtras.setBorder(javax.swing.BorderFactory.createTitledBorder("Datos extras"));
+        jScrollPane2.setViewportView(JTA_DatosExtras);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -241,9 +319,9 @@ public class RegistroFormularioVista extends javax.swing.JFrame {
                     .addComponent(jPanel2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jScrollPane2)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jButton1)
+                        .addComponent(JBTN_Cancelar)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButton2)))
+                        .addComponent(JBTN_Guardar)))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -257,8 +335,8 @@ public class RegistroFormularioVista extends javax.swing.JFrame {
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1)
-                    .addComponent(jButton2))
+                    .addComponent(JBTN_Cancelar)
+                    .addComponent(JBTN_Guardar))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -276,49 +354,35 @@ public class RegistroFormularioVista extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Windows".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(RegistroFormularioVista.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(RegistroFormularioVista.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(RegistroFormularioVista.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(RegistroFormularioVista.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
+    private void JBTN_CancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JBTN_CancelarActionPerformed
+        // TODO add your handling code here:
+        this.dispose();
+    }//GEN-LAST:event_JBTN_CancelarActionPerformed
 
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new RegistroFormularioVista().setVisible(true);
-            }
-        });
-    }
+    private void JBTN_GuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JBTN_GuardarActionPerformed
+        // TODO add your handling code here:
+        if (esValidoFormulario()) {
+            
+        } else {
+            JOptionPane.showMessageDialog(null, "Datos no válidos");
+        }
+    }//GEN-LAST:event_JBTN_GuardarActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton JBTN_Cancelar;
+    private javax.swing.JButton JBTN_Guardar;
+    private javax.swing.JCheckBox JCB_Sintomas;
+    private javax.swing.JComboBox<String> JComboBox_Dosis;
+    private javax.swing.JComboBox<String> JComboBox_PCR;
+    private javax.swing.JComboBox<String> JComboBox_Vacuna;
+    private com.toedter.calendar.JDateChooser JDC_FechaNacimiento;
+    private javax.swing.JRadioButton JRBTN_F;
+    private javax.swing.JRadioButton JRBTN_M;
+    private javax.swing.JTextArea JTA_DatosExtras;
+    private javax.swing.JTextField JTF_Apellidos;
+    private javax.swing.JTextField JTF_DUI;
+    private javax.swing.JTextField JTF_Nombres;
     private javax.swing.ButtonGroup buttonGroup1;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JCheckBox jCheckBox1;
-    private javax.swing.JComboBox<String> jComboBox1;
-    private javax.swing.JComboBox<String> jComboBox2;
-    private com.toedter.calendar.JDateChooser jDateChooser1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -327,17 +391,11 @@ public class RegistroFormularioVista extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
-    private javax.swing.JRadioButton jRadioButton1;
-    private javax.swing.JRadioButton jRadioButton2;
-    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTextArea jTextArea1;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
     // End of variables declaration//GEN-END:variables
 }
