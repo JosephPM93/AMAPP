@@ -25,4 +25,8 @@ public class ConsultasControlador {
         JOptionPane.showMessageDialog(null, "¡Valor ingresado no válido!", "Error", JOptionPane.WARNING_MESSAGE);
     }
     
+    public void NoHaySeleccionMensaje(){
+        JOptionPane.showMessageDialog(null, "¡No se ha seleccionado nada!", "Error", JOptionPane.WARNING_MESSAGE);
+    }
+    
 }

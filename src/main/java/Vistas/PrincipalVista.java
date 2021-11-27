@@ -174,7 +174,7 @@ public class PrincipalVista extends javax.swing.JFrame {
         while (true) {
             Nombre = JOptionPane.showInputDialog(null, "Ingrese el nombre de " + tabla, "Ingresar datos", JOptionPane.QUESTION_MESSAGE);
             if (!valid.EsVacio(Nombre)) {
-                if (type.getClass() == Dosis.class) {
+                if (type == Dosis.class) {
                     Dosis NuevaDosis = new Dosis(Nombre);
                     if (coreCrud.Insert(NuevaDosis)) {
                         this.ListaDosis.add(NuevaDosis);
@@ -183,7 +183,7 @@ public class PrincipalVista extends javax.swing.JFrame {
                     } else {
                         cons.MensajeError();
                     }
-                } else if (type.getClass() == PCR.class) {
+                } else if (type == PCR.class) {
                     PCR NuevaPCR = new PCR(Nombre);
                     if (coreCrud.Insert(NuevaPCR)) {
                         this.ListaPCR.add(NuevaPCR);
@@ -192,7 +192,7 @@ public class PrincipalVista extends javax.swing.JFrame {
                     } else {
                         cons.MensajeError();
                     }
-                } else if (type.getClass() == Vacuna.class) {
+                } else if (type == Vacuna.class) {
                     Vacuna NuevaVacuna = new Vacuna(Nombre);
                     if (coreCrud.Insert(NuevaVacuna)) {
                         this.ListaVacunas.add(NuevaVacuna);
@@ -201,6 +201,8 @@ public class PrincipalVista extends javax.swing.JFrame {
                     } else {
                         cons.MensajeError();
                     }
+                } else {
+                    System.out.println("ERORRRRRRRRRRRRRRR");
                 }
                 break;
             } else if (Nombre == null) {
@@ -220,7 +222,7 @@ public class PrincipalVista extends javax.swing.JFrame {
             while (true) {
                 Nombre = JOptionPane.showInputDialog(null, "Ingrese el nombre de " + tabla, "Ingresar datos", JOptionPane.QUESTION_MESSAGE);
                 if (!valid.EsVacio(Nombre)) {
-                    if (type.getClass() == Dosis.class) {
+                    if (type == Dosis.class) {
                         Dosis NuevaDosis = this.ListaDosis.get(this.JList_Dosis.getSelectedIndex() - 1);
                         NuevaDosis.setNombre(Nombre);
                         if (coreCrud.Update(NuevaDosis)) {
@@ -234,7 +236,7 @@ public class PrincipalVista extends javax.swing.JFrame {
                         } else {
                             cons.MensajeError();
                         }
-                    } else if (type.getClass() == PCR.class) {
+                    } else if (type == PCR.class) {
                         PCR NuevaPCR = this.ListaPCR.get(this.JList_PCR.getSelectedIndex() - 1);
                         NuevaPCR.setNombre(Nombre);
                         if (coreCrud.Update(NuevaPCR)) {
@@ -248,7 +250,7 @@ public class PrincipalVista extends javax.swing.JFrame {
                         } else {
                             cons.MensajeError();
                         }
-                    } else if (type.getClass() == Vacuna.class) {
+                    } else if (type == Vacuna.class) {
                         Vacuna NuevaVacuna = this.ListaVacunas.get(this.JList_Vacuna.getSelectedIndex() - 1);
                         NuevaVacuna.setNombre(Nombre);
                         if (coreCrud.Update(NuevaVacuna)) {
@@ -262,25 +264,18 @@ public class PrincipalVista extends javax.swing.JFrame {
                         } else {
                             cons.MensajeError();
                         }
-                    }
-                    Dosis NuevaDosis = this.ListaDosis.get(this.JList_Dosis.getSelectedIndex() - 1);
-                    NuevaDosis.setNombre(Nombre);
-                    if (coreCrud.Update(NuevaDosis)) {
-
-                        this.JList_Dosis.setModel(CalculosControlador.rellenarListaDosis(JListModelDosis, ListaDosis));
-                        JOptionPane.showMessageDialog(null, "Datos guardados correctamente", "Ok", JOptionPane.INFORMATION_MESSAGE);
                     } else {
-                        JOptionPane.showMessageDialog(null, "¡Hubo un problema!", "Error", JOptionPane.ERROR_MESSAGE);
+                        System.out.println("ERORRRRRRRRRRRRRRR");
                     }
                     break;
                 } else if (Nombre == null) {
                     break;
                 } else {
-                    JOptionPane.showMessageDialog(null, "¡Valor ingresado no válido!", "Error", JOptionPane.WARNING_MESSAGE);
+                    cons.ValorNoValidoMensaje();
                 }
             }
         } else {
-            JOptionPane.showMessageDialog(null, "¡No se ha seleccionado nada!", "Error", JOptionPane.WARNING_MESSAGE);
+            cons.NoHaySeleccionMensaje();
         }
     }
 
@@ -288,7 +283,7 @@ public class PrincipalVista extends javax.swing.JFrame {
         if ((this.JList_Dosis.getSelectedIndex() != -1 && this.JList_Dosis.getSelectedIndex() != 0)
                 || (this.JList_PCR.getSelectedIndex() != -1 && this.JList_PCR.getSelectedIndex() != 0)
                 || (this.JList_Vacuna.getSelectedIndex() != -1 && this.JList_Vacuna.getSelectedIndex() != 0)) {
-            if (type.getClass() == Dosis.class) {
+            if (type == Dosis.class) {
                 Dosis EliminarDosis = this.ListaDosis.get(this.JList_Dosis.getSelectedIndex() - 1);
                 if (coreCrud.Delete(EliminarDosis)) {
                     this.ListaDosis.remove(EliminarDosis);
@@ -297,7 +292,7 @@ public class PrincipalVista extends javax.swing.JFrame {
                 } else {
                     cons.MensajeError();
                 }
-            } else if (type.getClass() == PCR.class) {
+            } else if (type == PCR.class) {
                 PCR EliminarPCR = this.ListaPCR.get(this.JList_PCR.getSelectedIndex() - 1);
                 if (coreCrud.Delete(EliminarPCR)) {
                     this.ListaPCR.remove(EliminarPCR);
@@ -306,7 +301,7 @@ public class PrincipalVista extends javax.swing.JFrame {
                 } else {
                     cons.MensajeError();
                 }
-            } else if (type.getClass() == Vacuna.class) {
+            } else if (type == Vacuna.class) {
                 Vacuna EliminarVacuna = this.ListaVacunas.get(this.JList_Vacuna.getSelectedIndex() - 1);
                 if (coreCrud.Delete(EliminarVacuna)) {
                     this.ListaVacunas.remove(EliminarVacuna);
@@ -316,7 +311,6 @@ public class PrincipalVista extends javax.swing.JFrame {
                     cons.MensajeError();
                 }
             }
-
         }
     }
 
@@ -739,46 +733,6 @@ public class PrincipalVista extends javax.swing.JFrame {
         rfv.setVisible(true);
     }//GEN-LAST:event_JBTN_nuevoActionPerformed
 
-    private void JBTN_NuevaDosisActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JBTN_NuevaDosisActionPerformed
-        // TODO add your handling code here:
-        NuevaPCR_Dosis_Vacuna(Dosis.class, "Dosis");
-    }//GEN-LAST:event_JBTN_NuevaDosisActionPerformed
-
-    private void JBTN_ModificarDosisActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JBTN_ModificarDosisActionPerformed
-        // TODO add your handling code here:
-        ModificarPCR_Dosis_Vacuna(Dosis.class, "Dosis");
-    }//GEN-LAST:event_JBTN_ModificarDosisActionPerformed
-
-    private void JBTN_EliminarDosisActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JBTN_EliminarDosisActionPerformed
-        // TODO add your handling code here:
-        
-    }//GEN-LAST:event_JBTN_EliminarDosisActionPerformed
-
-    private void JBTN_NuevaPCRActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JBTN_NuevaPCRActionPerformed
-        // TODO add your handling code here:
-        NuevaPCR_Dosis_Vacuna(Dosis.class, "Dosis");
-    }//GEN-LAST:event_JBTN_NuevaPCRActionPerformed
-
-    private void JBTN_ModificarPCRActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JBTN_ModificarPCRActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_JBTN_ModificarPCRActionPerformed
-
-    private void JBTN_EliminarPCRActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JBTN_EliminarPCRActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_JBTN_EliminarPCRActionPerformed
-
-    private void JBTN_NuevaVacunaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JBTN_NuevaVacunaActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_JBTN_NuevaVacunaActionPerformed
-
-    private void JBTN_ModificarVacunaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JBTN_ModificarVacunaActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_JBTN_ModificarVacunaActionPerformed
-
-    private void JBTN_EliminarVacunaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JBTN_EliminarVacunaActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_JBTN_EliminarVacunaActionPerformed
-
     private void JList_DosisValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_JList_DosisValueChanged
         // TODO add your handling code here:
         if (!(this.JList_Dosis.isSelectionEmpty() || this.JList_Dosis.isSelectedIndex(0))) {
@@ -811,6 +765,51 @@ public class PrincipalVista extends javax.swing.JFrame {
             this.JBTN_EliminarVacuna.setEnabled(false);
         }
     }//GEN-LAST:event_JList_VacunaValueChanged
+
+    private void JBTN_NuevaDosisActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JBTN_NuevaDosisActionPerformed
+        // TODO add your handling code here:
+        NuevaPCR_Dosis_Vacuna(Dosis.class, "Dosis");
+    }//GEN-LAST:event_JBTN_NuevaDosisActionPerformed
+
+    private void JBTN_NuevaPCRActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JBTN_NuevaPCRActionPerformed
+        // TODO add your handling code here:
+        NuevaPCR_Dosis_Vacuna(PCR.class, "PCR");
+    }//GEN-LAST:event_JBTN_NuevaPCRActionPerformed
+
+    private void JBTN_NuevaVacunaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JBTN_NuevaVacunaActionPerformed
+        // TODO add your handling code here:
+        NuevaPCR_Dosis_Vacuna(Vacuna.class, "Vacuna");
+    }//GEN-LAST:event_JBTN_NuevaVacunaActionPerformed
+
+    private void JBTN_ModificarDosisActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JBTN_ModificarDosisActionPerformed
+        // TODO add your handling code here:
+        ModificarPCR_Dosis_Vacuna(Dosis.class, "Dosis");
+    }//GEN-LAST:event_JBTN_ModificarDosisActionPerformed
+
+    private void JBTN_ModificarPCRActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JBTN_ModificarPCRActionPerformed
+        // TODO add your handling code here:
+        ModificarPCR_Dosis_Vacuna(PCR.class, "PCR");
+    }//GEN-LAST:event_JBTN_ModificarPCRActionPerformed
+
+    private void JBTN_ModificarVacunaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JBTN_ModificarVacunaActionPerformed
+        // TODO add your handling code here:
+        ModificarPCR_Dosis_Vacuna(Vacuna.class, "Vacuna");
+    }//GEN-LAST:event_JBTN_ModificarVacunaActionPerformed
+
+    private void JBTN_EliminarDosisActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JBTN_EliminarDosisActionPerformed
+        // TODO add your handling code here:
+        EliminarPCR_Dosis_Vacuna(Dosis.class, "Dosis");
+    }//GEN-LAST:event_JBTN_EliminarDosisActionPerformed
+
+    private void JBTN_EliminarPCRActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JBTN_EliminarPCRActionPerformed
+        // TODO add your handling code here:
+        EliminarPCR_Dosis_Vacuna(PCR.class, "PCR");
+    }//GEN-LAST:event_JBTN_EliminarPCRActionPerformed
+
+    private void JBTN_EliminarVacunaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JBTN_EliminarVacunaActionPerformed
+        // TODO add your handling code here:
+        EliminarPCR_Dosis_Vacuna(Vacuna.class, "Vacuna");
+    }//GEN-LAST:event_JBTN_EliminarVacunaActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton JBTN_EliminarDosis;

@@ -6,13 +6,17 @@
 package Vistas;
 
 import Controladores.CalculosControlador;
+import Controladores.ConsultasControlador;
+import Controladores.CoreCRUDControlador;
 import Libs.Validaciones;
 import Modelos.Dosis;
 import Modelos.PCR;
+import Modelos.Persona;
+import Modelos.PersonaDosisVacuna;
 import Modelos.Vacuna;
+import java.sql.Date;
 import java.util.List;
 import javax.swing.DefaultComboBoxModel;
-import javax.swing.JOptionPane;
 
 /**
  *
@@ -29,6 +33,8 @@ public class RegistroFormularioVista extends javax.swing.JDialog {
     DefaultComboBoxModel ComboBoxModelDosis;
 
     Validaciones valid = new Validaciones();
+    CoreCRUDControlador coreCrud = new CoreCRUDControlador();
+    ConsultasControlador cons = new ConsultasControlador();
 
     /**
      * Creates new form RegistroFormularioVista
@@ -44,6 +50,12 @@ public class RegistroFormularioVista extends javax.swing.JDialog {
         this.setLocationRelativeTo(null);
         this.setTitle("Registrar nuevo caso");
         this.setResizable(false);
+
+        this.JL_FDosis.setVisible(false);
+        this.JDC_FechaDosis.setVisible(false);
+
+        this.JL_FPCR.setVisible(false);
+        this.JDC_FechaPCR.setVisible(false);
 
         this.ListaVacunas = ListaVacunas;
         this.ListaPCR = ListaPCR;
@@ -102,6 +114,14 @@ public class RegistroFormularioVista extends javax.swing.JDialog {
         JComboBox_Dosis = new javax.swing.JComboBox<>();
         jLabel9 = new javax.swing.JLabel();
         JComboBox_Vacuna = new javax.swing.JComboBox<>();
+        jLabel10 = new javax.swing.JLabel();
+        JCB_Fallecido = new javax.swing.JCheckBox();
+        jLabel11 = new javax.swing.JLabel();
+        JCB_Recuperado = new javax.swing.JCheckBox();
+        JL_FDosis = new javax.swing.JLabel();
+        JDC_FechaDosis = new com.toedter.calendar.JDateChooser();
+        JL_FPCR = new javax.swing.JLabel();
+        JDC_FechaPCR = new com.toedter.calendar.JDateChooser();
         JBTN_Cancelar = new javax.swing.JButton();
         JBTN_Guardar = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
@@ -198,7 +218,7 @@ public class RegistroFormularioVista extends javax.swing.JDialog {
                 .addComponent(JRBTN_F, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(JRBTN_M)
-                .addContainerGap(176, Short.MAX_VALUE))
+                .addContainerGap(168, Short.MAX_VALUE))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -230,6 +250,11 @@ public class RegistroFormularioVista extends javax.swing.JDialog {
         jPanel3.add(jLabel6, gridBagConstraints);
 
         JComboBox_PCR.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        JComboBox_PCR.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                JComboBox_PCRItemStateChanged(evt);
+            }
+        });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 0;
@@ -241,13 +266,14 @@ public class RegistroFormularioVista extends javax.swing.JDialog {
         jLabel7.setText("Síntomas");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 1;
+        gridBagConstraints.gridy = 14;
         gridBagConstraints.ipadx = 10;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
         gridBagConstraints.insets = new java.awt.Insets(0, 4, 0, 4);
         jPanel3.add(jLabel7, gridBagConstraints);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 1;
+        gridBagConstraints.gridy = 14;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.weightx = 2.0;
         gridBagConstraints.insets = new java.awt.Insets(2, 0, 2, 0);
@@ -256,16 +282,21 @@ public class RegistroFormularioVista extends javax.swing.JDialog {
         jLabel8.setText("Dósis");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 2;
+        gridBagConstraints.gridy = 20;
         gridBagConstraints.ipadx = 10;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
         gridBagConstraints.insets = new java.awt.Insets(0, 4, 0, 4);
         jPanel3.add(jLabel8, gridBagConstraints);
 
         JComboBox_Dosis.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        JComboBox_Dosis.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                JComboBox_DosisItemStateChanged(evt);
+            }
+        });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 2;
+        gridBagConstraints.gridy = 20;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.weightx = 2.0;
         gridBagConstraints.insets = new java.awt.Insets(2, 0, 2, 0);
@@ -274,7 +305,7 @@ public class RegistroFormularioVista extends javax.swing.JDialog {
         jLabel9.setText("Vacuna");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 3;
+        gridBagConstraints.gridy = 23;
         gridBagConstraints.ipadx = 10;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
         gridBagConstraints.insets = new java.awt.Insets(0, 4, 0, 4);
@@ -283,11 +314,73 @@ public class RegistroFormularioVista extends javax.swing.JDialog {
         JComboBox_Vacuna.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 3;
+        gridBagConstraints.gridy = 23;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.weightx = 2.0;
         gridBagConstraints.insets = new java.awt.Insets(2, 0, 2, 0);
         jPanel3.add(JComboBox_Vacuna, gridBagConstraints);
+
+        jLabel10.setText("Fallecido");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 18;
+        gridBagConstraints.ipadx = 10;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
+        gridBagConstraints.insets = new java.awt.Insets(0, 4, 0, 4);
+        jPanel3.add(jLabel10, gridBagConstraints);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 18;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.insets = new java.awt.Insets(2, 0, 2, 0);
+        jPanel3.add(JCB_Fallecido, gridBagConstraints);
+
+        jLabel11.setText("Recuperado");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 19;
+        gridBagConstraints.ipadx = 10;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
+        gridBagConstraints.insets = new java.awt.Insets(0, 4, 0, 4);
+        jPanel3.add(jLabel11, gridBagConstraints);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 19;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.insets = new java.awt.Insets(2, 0, 2, 0);
+        jPanel3.add(JCB_Recuperado, gridBagConstraints);
+
+        JL_FDosis.setText("F. Dosis");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 22;
+        gridBagConstraints.ipadx = 10;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
+        gridBagConstraints.insets = new java.awt.Insets(0, 4, 0, 4);
+        jPanel3.add(JL_FDosis, gridBagConstraints);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 22;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.weightx = 2.0;
+        gridBagConstraints.insets = new java.awt.Insets(2, 0, 2, 0);
+        jPanel3.add(JDC_FechaDosis, gridBagConstraints);
+
+        JL_FPCR.setText("F. PCR");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 13;
+        gridBagConstraints.ipadx = 10;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
+        gridBagConstraints.insets = new java.awt.Insets(0, 4, 0, 4);
+        jPanel3.add(JL_FPCR, gridBagConstraints);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 13;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.weightx = 2.0;
+        gridBagConstraints.insets = new java.awt.Insets(2, 0, 2, 0);
+        jPanel3.add(JDC_FechaPCR, gridBagConstraints);
 
         JBTN_Cancelar.setText("Cancelar");
         JBTN_Cancelar.addActionListener(new java.awt.event.ActionListener() {
@@ -315,8 +408,8 @@ public class RegistroFormularioVista extends javax.swing.JDialog {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addComponent(jPanel2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 352, Short.MAX_VALUE)
                     .addComponent(jScrollPane2)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(JBTN_Cancelar)
@@ -326,18 +419,18 @@ public class RegistroFormularioVista extends javax.swing.JDialog {
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(4, 4, 4)
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(4, 4, 4)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 114, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(JBTN_Cancelar)
                     .addComponent(JBTN_Guardar))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -362,20 +455,71 @@ public class RegistroFormularioVista extends javax.swing.JDialog {
     private void JBTN_GuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JBTN_GuardarActionPerformed
         // TODO add your handling code here:
         if (esValidoFormulario()) {
-            
+            Persona NuevoCaso = new Persona(
+                    this.JTF_Nombres.getText().trim(),
+                    this.JTF_Nombres.getText().trim(),
+                    this.JTF_Nombres.getText().trim(),
+                    (Date) JDC_FechaNacimiento.getDate(),
+                    this.JRBTN_M.isSelected(),
+                    this.JCB_Sintomas.isSelected(),
+                    this.JCB_Recuperado.isSelected(),
+                    this.JCB_Fallecido.isSelected(),
+                    this.JTA_DatosExtras.getText()
+            );
+
+            coreCrud.Insert(NuevoCaso);
+
+            List<Persona> personas = coreCrud.SelectPersona();
+
+            Persona caso = personas.get(personas.size() - 1);
+
+            PersonaDosisVacuna pdv = new PersonaDosisVacuna();
+
         } else {
-            JOptionPane.showMessageDialog(null, "Datos no válidos");
+            cons.ValorNoValidoMensaje();
         }
     }//GEN-LAST:event_JBTN_GuardarActionPerformed
+
+    private void JComboBox_DosisItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_JComboBox_DosisItemStateChanged
+        // TODO add your handling code here:
+        if (evt.getStateChange() == 1) {
+            if (this.JComboBox_Dosis.getSelectedIndex() != -1 && this.JComboBox_Dosis.getSelectedIndex() != 0) {
+                this.JL_FDosis.setVisible(true);
+                this.JDC_FechaDosis.setVisible(true);
+            } else {
+                this.JL_FDosis.setVisible(false);
+                this.JDC_FechaDosis.setVisible(false);
+            }
+        }
+    }//GEN-LAST:event_JComboBox_DosisItemStateChanged
+
+    private void JComboBox_PCRItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_JComboBox_PCRItemStateChanged
+        // TODO add your handling code here:
+        if (evt.getStateChange() == 1) {
+            if (this.JComboBox_PCR.getSelectedIndex() != -1 && this.JComboBox_PCR.getSelectedIndex() != 0) {
+                this.JL_FPCR.setVisible(true);
+                this.JDC_FechaPCR.setVisible(true);
+            } else {
+                this.JL_FPCR.setVisible(false);
+                this.JDC_FechaPCR.setVisible(false);
+            }
+        }
+    }//GEN-LAST:event_JComboBox_PCRItemStateChanged
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton JBTN_Cancelar;
     private javax.swing.JButton JBTN_Guardar;
+    private javax.swing.JCheckBox JCB_Fallecido;
+    private javax.swing.JCheckBox JCB_Recuperado;
     private javax.swing.JCheckBox JCB_Sintomas;
     private javax.swing.JComboBox<String> JComboBox_Dosis;
     private javax.swing.JComboBox<String> JComboBox_PCR;
     private javax.swing.JComboBox<String> JComboBox_Vacuna;
+    private com.toedter.calendar.JDateChooser JDC_FechaDosis;
     private com.toedter.calendar.JDateChooser JDC_FechaNacimiento;
+    private com.toedter.calendar.JDateChooser JDC_FechaPCR;
+    private javax.swing.JLabel JL_FDosis;
+    private javax.swing.JLabel JL_FPCR;
     private javax.swing.JRadioButton JRBTN_F;
     private javax.swing.JRadioButton JRBTN_M;
     private javax.swing.JTextArea JTA_DatosExtras;
@@ -384,6 +528,8 @@ public class RegistroFormularioVista extends javax.swing.JDialog {
     private javax.swing.JTextField JTF_Nombres;
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
