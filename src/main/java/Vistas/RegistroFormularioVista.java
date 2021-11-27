@@ -69,15 +69,39 @@ public class RegistroFormularioVista extends javax.swing.JDialog {
         this.JComboBox_Dosis.setModel(CalculosControlador.rellenarListaDosis(ComboBoxModelDosis, ListaDosis));
     }
 
-    private boolean esValidoFormulario() {
-        return !valid.EsVacio(this.JTF_Nombres)
-                && valid.EsVacio(this.JTF_Apellidos)
-                && valid.EsVacio(this.JTF_DUI)
-                && valid.EsVacio(this.JDC_FechaNacimiento)
-                && (this.JRBTN_F.isSelected() || this.JRBTN_M.isSelected())
-                && (this.JComboBox_Dosis.getSelectedIndex() != 0)
-                && (this.JComboBox_PCR.getSelectedIndex() != 0)
-                && (this.JComboBox_Vacuna.getSelectedIndex() != 0);
+    private boolean esValidoFormulario(int i) {
+        boolean base
+                = !valid.EsVacio(this.JTF_Nombres)
+                && !valid.EsVacio(this.JTF_Apellidos)
+                && !valid.EsVacio(this.JTF_DUI)
+                && !valid.EsVacio(this.JDC_FechaNacimiento)
+                && (this.JRBTN_F.isSelected() || this.JRBTN_M.isSelected());
+        return switch (i) {
+            case 0 ->
+                base;
+            case 1 ->
+                base && !valid.EsVacio(this.JDC_FechaDosis);
+            case 2 ->
+                base && !valid.EsVacio(this.JDC_FechaPCR);
+            case 3 ->
+                base && !valid.EsVacio(this.JDC_FechaDosis) && !valid.EsVacio(this.JDC_FechaPCR);
+            default ->
+                base;
+        };
+    }
+
+    private Persona obtenerDatosPersona() {
+        return new Persona(
+                this.JTF_Nombres.getText().trim(),
+                this.JTF_Nombres.getText().trim(),
+                this.JTF_Nombres.getText().trim(),
+                (Date) JDC_FechaNacimiento.getDate(),
+                this.JRBTN_M.isSelected(),
+                this.JCB_Sintomas.isSelected(),
+                this.JCB_Recuperado.isSelected(),
+                this.JCB_Fallecido.isSelected(),
+                this.JTA_DatosExtras.getText()
+        );
     }
 
     /**
@@ -186,6 +210,7 @@ public class RegistroFormularioVista extends javax.swing.JDialog {
         gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
         gridBagConstraints.insets = new java.awt.Insets(0, 4, 0, 4);
         jPanel2.add(jLabel4, gridBagConstraints);
+
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 3;
@@ -409,7 +434,7 @@ public class RegistroFormularioVista extends javax.swing.JDialog {
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 352, Short.MAX_VALUE)
+                    .addComponent(jPanel2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jScrollPane2)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(JBTN_Cancelar)
@@ -454,19 +479,13 @@ public class RegistroFormularioVista extends javax.swing.JDialog {
 
     private void JBTN_GuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JBTN_GuardarActionPerformed
         // TODO add your handling code here:
-        if (esValidoFormulario()) {
-            Persona NuevoCaso = new Persona(
-                    this.JTF_Nombres.getText().trim(),
-                    this.JTF_Nombres.getText().trim(),
-                    this.JTF_Nombres.getText().trim(),
-                    (Date) JDC_FechaNacimiento.getDate(),
-                    this.JRBTN_M.isSelected(),
-                    this.JCB_Sintomas.isSelected(),
-                    this.JCB_Recuperado.isSelected(),
-                    this.JCB_Fallecido.isSelected(),
-                    this.JTA_DatosExtras.getText()
-            );
+        if (this.JComboBox_Dosis.getSelectedIndex() != 0) {
 
+        } else if (this.JComboBox_Dosis.getSelectedIndex() != 0 && this.JComboBox_PCR.getSelectedIndex() != 0) {
+
+        }
+        if (esValidoFormulario(0)) {
+            Persona NuevoCaso = obtenerDatosPersona();
             coreCrud.Insert(NuevoCaso);
 
             List<Persona> personas = coreCrud.SelectPersona();
