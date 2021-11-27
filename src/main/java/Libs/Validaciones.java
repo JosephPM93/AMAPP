@@ -23,7 +23,7 @@ public class Validaciones {
     }
     
     public boolean EsVacio(String text) {
-        return text.trim().equals("");
+        return text == null || text.trim().equals("");
     }
 
     public boolean JTextField_EsNumeroDecimal(JTextField jtf) {
