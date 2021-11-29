@@ -20,6 +20,12 @@ import javax.swing.table.DefaultTableModel;
  */
 public class CalculosControlador {
 
+    /**
+     * Este metodo es para el llenamiento de la lista vacunas
+     * @param modelo - Establecimiento del modelo para JTable
+     * @param datos - Lista de tipo objeto de la clase Vacuna
+     * @return modelo - Retorna el modelo de la tabla
+     **/
     public static DefaultListModel rellenarListaVacuna(DefaultListModel modelo, List<Vacuna> datos) {
         modelo = new DefaultListModel();
         modelo.addElement("Sin seleccionar");
@@ -28,7 +34,12 @@ public class CalculosControlador {
         }
         return modelo;
     }
-
+    /**
+     * Este metodo es para el llenamiento de la lista PCR
+     * @param modelo - Establecimiento del modelo para JTable
+     * @param datos - Lista de tipo objeto de la clase PCR
+     * @return modelo - Retorna el modelo de la tabla
+     **/
     public static DefaultListModel rellenarListaPCR(DefaultListModel modelo, List<PCR> datos) {
         modelo = new DefaultListModel();
         modelo.addElement("Sin seleccionar");
@@ -37,7 +48,12 @@ public class CalculosControlador {
         }
         return modelo;
     }
-
+    /**
+     * Este metodo es para el llenamiento de la lista Dosis
+     * @param modelo - Establecimiento del modelo para JTable
+     * @param datos - Lista de tipo objeto de la clase Dosis
+     * @return modelo - Retorna el modelo de la tabla
+     **/
     public static DefaultListModel rellenarListaDosis(DefaultListModel modelo, List<Dosis> datos) {
         modelo = new DefaultListModel();
         modelo.addElement("Sin seleccionar");
@@ -46,7 +62,12 @@ public class CalculosControlador {
         }
         return modelo;
     }
-
+    /**
+     * Este metodo es para el llenamiento de la lista Personas
+     * @param modelo - Establecimiento del modelo para JTable
+     * @param datos - Lista de tipo objeto de la clase Persona
+     * @return modelo - Retorna el modelo de la tabla
+     **/
     public static DefaultTableModel rellenarTablaPersonas(DefaultTableModel modelo, List<Persona> datos) {
         modelo = new DefaultTableModel();
 
@@ -74,7 +95,12 @@ public class CalculosControlador {
 
         return modelo;
     }
-
+    /**
+     * Este metodo es para la seleccion del ComboBox Vacuna
+     * @param modelo - Establecimiento del modelo para ComboBox
+     * @param datos - Lista de tipo objeto de la clase Vacuna
+     * @return modelo - Retorna el modelo del ComboBox
+     **/
     public static DefaultComboBoxModel rellenarListaVacuna(DefaultComboBoxModel modelo, List<Vacuna> datos) {
         modelo = new DefaultComboBoxModel();
         modelo.addElement("Sin seleccionar");
@@ -83,7 +109,12 @@ public class CalculosControlador {
         }
         return modelo;
     }
-
+    /**
+     * Este metodo es para la seleccion del ComboBox PCR
+     * @param modelo - Establecimiento del modelo para ComboBox
+     * @param datos - Lista de tipo objeto de la clase PCR
+     * @return modelo - Retorna el modelo del ComboBox
+     **/
     public static DefaultComboBoxModel rellenarListaPCR(DefaultComboBoxModel modelo, List<PCR> datos) {
         modelo = new DefaultComboBoxModel();
         modelo.addElement("Sin seleccionar");
@@ -92,7 +123,12 @@ public class CalculosControlador {
         }
         return modelo;
     }
-
+    /**
+     * Este metodo es para la seleccion del ComboBox Dosis
+     * @param modelo - Establecimiento del modelo para ComboBox
+     * @param datos - Lista de tipo objeto de la clase Dosis
+     * @return modelo - Retorna el modelo del ComboBox
+     **/
     public static DefaultComboBoxModel rellenarListaDosis(DefaultComboBoxModel modelo, List<Dosis> datos) {
         modelo = new DefaultComboBoxModel();
         modelo.addElement("Sin seleccionar");
