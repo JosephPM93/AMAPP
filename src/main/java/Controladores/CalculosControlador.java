@@ -8,9 +8,16 @@ package Controladores;
 import Modelos.Dosis;
 import Modelos.PCR;
 import Modelos.Persona;
+import Modelos.PersonaDosisVacuna;
+import Modelos.PersonaPCR;
 import Modelos.Vacuna;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.time.temporal.ChronoUnit;
+import java.time.temporal.Temporal;
+import java.util.Date;
 import java.util.List;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
@@ -23,6 +30,8 @@ import javax.swing.table.DefaultTableModel;
  * @author José Padilla
  */
 public class CalculosControlador {
+
+    static CoreCRUDControlador coreCrud = new CoreCRUDControlador();
 
     /**
      * Este metodo es para el llenamiento de la lista vacunas
@@ -83,7 +92,7 @@ public class CalculosControlador {
      * @return modelo - Retorna el modelo de la tabla
      *
      */
-    public static DefaultTableModel rellenarTablaPersonas(DefaultTableModel modelo, List<Persona> datos) {
+    public static DefaultTableModel rellenarTablaPersonas(DefaultTableModel modelo, List<Persona> datos, List<Vacuna> ListaVacunas, List<PCR> ListaPCR, List<Dosis> ListaDosis) {
         modelo = new DefaultTableModel();
 
         Object Titulos[] = {"Id", "N", "Nombre Completo", "DUI/DUI Responsable", "Edad", "Sexo", "Última dosis", "Prueba PCR", "Estado"};
@@ -93,15 +102,29 @@ public class CalculosControlador {
         try {
             int i = 1;
             for (Persona d : datos) {
+                List<PersonaDosisVacuna> lpdv = coreCrud.SelectPersonaDosisVacuna(d.getId());
+                List<PersonaPCR> lppcr = coreCrud.SelectPersonaPCR(d.getId());
+                PersonaDosisVacuna pdv = null;
+                PersonaPCR ppcr = null;
+                if (lpdv.size() != 0) {
+                    pdv = lpdv.get(0);
+                }
+                if (lppcr.size() != 0) {
+                    ppcr = lppcr.get(0);
+                }
                 Object rows[] = {
                     d.getId(),
                     i,
                     d.getNombres() + " " + d.getApellidos(),
                     d.getDui(),
-                    d.getF_nacimiento(),
+                    calcularAnios(d.getF_nacimiento()) + " Años",
                     d.isSexo() ? "Masculino" : "Femenino",
-                    "vacio",
-                    "vacio",
+                    pdv == null ? "Desconocido"
+                    : buscarEnListaDosis(ListaDosis, pdv.getDosis_id()).toString()
+                    + ", " + buscarEnListaVacuna(ListaVacunas, pdv.getVacuna_id()).toString()
+                    + ", " + pdv.getFecha_puesta(),
+                    ppcr == null ? "Desconocido"
+                    : buscarEnListaPCR(ListaPCR, ppcr.getPcr_id()).toString() + ", " + ppcr.getFecha_realizada(),
                     d.isFallecido() ? "Fallecido" : d.isRecuperado() ? "Recuperado" : d.isSintomas() ? "Con síntomas" : "Sin síntomas",};
                 modelo.addRow(rows);
                 i++;
@@ -111,6 +134,10 @@ public class CalculosControlador {
         }
 
         return modelo;
+    }
+    
+    public static long calcularAnios(Date FechaInicial){
+        return ChronoUnit.YEARS.between(FechaInicial.toInstant().atZone(ZoneId.systemDefault()).toLocalDate(), LocalDate.now()); 
     }
 
     /**
@@ -164,7 +191,7 @@ public class CalculosControlador {
         return modelo;
     }
 
-    public Dosis buscarEnListaDosis(List<Dosis> datos, int id) {
+    public static Dosis buscarEnListaDosis(List<Dosis> datos, int id) {
         Dosis res = null;
         for (Dosis d : datos) {
             if (d.getId() == id) {
@@ -175,7 +202,7 @@ public class CalculosControlador {
         return res;
     }
 
-    public PCR buscarEnListaPCR(List<PCR> datos, int id) {
+    public static PCR buscarEnListaPCR(List<PCR> datos, int id) {
         PCR res = null;
         for (PCR d : datos) {
             if (d.getId() == id) {
@@ -186,7 +213,7 @@ public class CalculosControlador {
         return res;
     }
 
-    public Vacuna buscarEnListaVacuna(List<Vacuna> datos, int id) {
+    public static Vacuna buscarEnListaVacuna(List<Vacuna> datos, int id) {
         Vacuna res = null;
         for (Vacuna d : datos) {
             if (d.getId() == id) {
@@ -197,7 +224,7 @@ public class CalculosControlador {
         return res;
     }
 
-    public Persona buscarEnListaPersona(List<Persona> datos, int id) {
+    public static Persona buscarEnListaPersona(List<Persona> datos, int id) {
         Persona res = null;
         for (Persona d : datos) {
             if (d.getId() == id) {

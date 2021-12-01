@@ -59,20 +59,21 @@ public class PrincipalVista extends javax.swing.JFrame {
     public PrincipalVista(List<Vacuna> ListaVacunas, List<PCR> ListaPCR, List<Dosis> ListaDosis, List<Persona> ListaPersonas) {
         initComponents();
         this.setLocationRelativeTo(null);
+        inicializarDatos(ListaVacunas, ListaPCR, ListaDosis, ListaPersonas);
+    }
+    
+    private void inicializarDatos(List<Vacuna> ListaVacunas, List<PCR> ListaPCR, List<Dosis> ListaDosis, List<Persona> ListaPersonas) {
+        
         this.ListaVacunas = ListaVacunas;
         this.ListaPCR = ListaPCR;
         this.ListaDosis = ListaDosis;
         this.ListaPersonas = ListaPersonas;
-        inicializarDatos();
-    }
-    
-    private void inicializarDatos() {
         
-        this.JList_Vacuna.setModel(CalculosControlador.rellenarListaVacuna(JListModelVacunas, ListaVacunas));
-        this.JList_PCR.setModel(CalculosControlador.rellenarListaPCR(JListModelPCR, ListaPCR));
-        this.JList_Dosis.setModel(CalculosControlador.rellenarListaDosis(JListModelDosis, ListaDosis));
+        this.JList_Vacuna.setModel(CalculosControlador.rellenarListaVacuna(JListModelVacunas, this.ListaVacunas));
+        this.JList_PCR.setModel(CalculosControlador.rellenarListaPCR(JListModelPCR, this.ListaPCR));
+        this.JList_Dosis.setModel(CalculosControlador.rellenarListaDosis(JListModelDosis, this.ListaDosis));
         
-        this.JTable_Personas.setModel(CalculosControlador.rellenarTablaPersonas(JTableModelPersonas, ListaPersonas));
+        this.JTable_Personas.setModel(CalculosControlador.rellenarTablaPersonas(JTableModelPersonas, this.ListaPersonas, this.ListaVacunas, this.ListaPCR, this.ListaDosis));
         this.JTable_Personas.setDefaultEditor(Object.class, null);
         this.JTable_Personas.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
     }
@@ -244,6 +245,7 @@ public class PrincipalVista extends javax.swing.JFrame {
         JCB_buscarPor = new javax.swing.JComboBox<>();
         JTF_buscador = new javax.swing.JTextField();
         JL_tituloRegistros = new javax.swing.JLabel();
+        JTF_Refrescar = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
         jButton7 = new javax.swing.JButton();
@@ -323,6 +325,13 @@ public class PrincipalVista extends javax.swing.JFrame {
 
         JL_tituloRegistros.setText("Registros: ");
 
+        JTF_Refrescar.setText("Refrescar");
+        JTF_Refrescar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                JTF_RefrescarActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout JP_registrosLayout = new javax.swing.GroupLayout(JP_registros);
         JP_registros.setLayout(JP_registrosLayout);
         JP_registrosLayout.setHorizontalGroup(
@@ -333,7 +342,9 @@ public class PrincipalVista extends javax.swing.JFrame {
                     .addComponent(jScrollPane1)
                     .addGroup(JP_registrosLayout.createSequentialGroup()
                         .addComponent(JL_tituloRegistros)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 469, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(JTF_Refrescar)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 405, Short.MAX_VALUE)
                         .addComponent(JTF_buscador, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(JCB_buscarPor, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -362,7 +373,8 @@ public class PrincipalVista extends javax.swing.JFrame {
                         .addComponent(JBTN_elminar)
                         .addComponent(JCB_buscarPor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(JTF_buscador, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(JL_tituloRegistros)))
+                        .addComponent(JL_tituloRegistros)
+                        .addComponent(JTF_Refrescar)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 561, Short.MAX_VALUE)
                 .addContainerGap())
@@ -733,7 +745,6 @@ public class PrincipalVista extends javax.swing.JFrame {
         // TODO add your handling code here:
         /*Me quede por aqui, falta colocar los datos correctamente para mandarlos al formulario y editarlos*/
         if (this.JTable_Personas.getSelectedRow() != -1) {
-            
             Persona caso = cal.buscarEnListaPersona(ListaPersonas,
                     (int) this.JTable_Personas.getValueAt(
                             this.JTable_Personas.getSelectedRow(),
@@ -754,7 +765,7 @@ public class PrincipalVista extends javax.swing.JFrame {
             rfv.setModal(true);
             rfv.enableInputMethods(true);
             rfv.setVisible(true);
-
+            
         } else {
             cons.NoHaySeleccionMensaje();
         }
@@ -780,6 +791,11 @@ public class PrincipalVista extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_JBTN_seleccionarActionPerformed
 
+    private void JTF_RefrescarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JTF_RefrescarActionPerformed
+        // TODO add your handling code here:
+        this.inicializarDatos(coreCrud.SelectVacuna(), coreCrud.SelectPCR(),coreCrud.SelectDosis(), coreCrud.SelectPersona());
+    }//GEN-LAST:event_JTF_RefrescarActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton JBTN_EliminarDosis;
     private javax.swing.JButton JBTN_EliminarPCR;
@@ -802,6 +818,7 @@ public class PrincipalVista extends javax.swing.JFrame {
     private javax.swing.JList<String> JList_Vacuna;
     private javax.swing.JPanel JP_registros;
     private javax.swing.JTabbedPane JTBP_pestanias;
+    private javax.swing.JButton JTF_Refrescar;
     private javax.swing.JTextField JTF_buscador;
     private javax.swing.JTable JTable_Personas;
     private javax.swing.JButton jButton7;

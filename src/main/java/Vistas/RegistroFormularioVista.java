@@ -48,7 +48,9 @@ public class RegistroFormularioVista extends javax.swing.JDialog {
     String mensaje_error = " no guardado.";
     String mensaje_recomendacion = "\nIntente editarlos después";
 
-    boolean ModoEditar = false;
+    boolean ModoEditarPersona = false;
+    boolean ModoEditarPDV = false;
+    boolean ModoEditarPPCR = false;
 
     /**
      * Creates new form RegistroFormularioVista
@@ -86,7 +88,7 @@ public class RegistroFormularioVista extends javax.swing.JDialog {
         this.setTitle("Editar un caso");
         this.setResizable(false);
 
-        ModoEditar = true;
+        ModoEditarPersona = true;
 
         this.ListaVacunas = ListaVacunas;
         this.ListaPCR = ListaPCR;
@@ -100,11 +102,15 @@ public class RegistroFormularioVista extends javax.swing.JDialog {
             this.JDC_FechaDosis.setVisible(false);
             this.JL_Vacuna.setVisible(false);
             this.JComboBox_Vacuna.setVisible(false);
+        } else {
+            this.ModoEditarPDV = true;
         }
 
         if (this.ppcr == null) {
             this.JL_FPCR.setVisible(false);
             this.JDC_FechaPCR.setVisible(false);
+        } else {
+            this.ModoEditarPPCR = true;
         }
 
         inicializarDatos();
@@ -116,7 +122,7 @@ public class RegistroFormularioVista extends javax.swing.JDialog {
         this.JComboBox_PCR.setModel(CalculosControlador.rellenarListaPCR(ComboBoxModelPCR, ListaPCR));
         this.JComboBox_Dosis.setModel(CalculosControlador.rellenarListaDosis(ComboBoxModelDosis, ListaDosis));
 
-        if (ModoEditar) {
+        if (ModoEditarPersona) {
             if (this.casoPersona != null) {
                 this.JTF_Nombres.setText(this.casoPersona.getNombres());
                 this.JTF_Apellidos.setText(this.casoPersona.getApellidos());
@@ -225,15 +231,15 @@ public class RegistroFormularioVista extends javax.swing.JDialog {
     }
 
     private boolean IngresarPersona() {
-        return (!ModoEditar) ? coreCrud.Insert(crearDatosPersona()) : coreCrud.Update(actualizarCasoPersona());
+        return (!ModoEditarPersona) ? coreCrud.Insert(crearDatosPersona()) : coreCrud.Update(actualizarCasoPersona());
     }
 
     private boolean IngresarDosisVacunaPersona() {
-        return (!ModoEditar) ? coreCrud.Insert(crearDatosDosisVacunaPersona()) : coreCrud.Update(actualizarDatosDosisVacunaPersona());
+        return (!ModoEditarPDV) ? coreCrud.Insert(crearDatosDosisVacunaPersona()) : coreCrud.Update(actualizarDatosDosisVacunaPersona());
     }
 
     private boolean IngresarPCRPersona() {
-        return (!ModoEditar) ? coreCrud.Insert(crearPersonaPCR()) : coreCrud.Update(actualizarPersonaPCR());
+        return (!ModoEditarPPCR) ? coreCrud.Insert(crearPersonaPCR()) : coreCrud.Update(actualizarPersonaPCR());
     }
 
     private boolean GuardarDatos() {
