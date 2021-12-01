@@ -102,8 +102,7 @@ public class CalculosControlador {
                     d.isSexo() ? "Masculino" : "Femenino",
                     "vacio",
                     "vacio",
-                    d.isFallecido() ? "Fallecido" : d.isRecuperado() ? "Recuperado" : d.isSintomas() ? "Con síntomas" : "Sin síntomas",
-                };
+                    d.isFallecido() ? "Fallecido" : d.isRecuperado() ? "Recuperado" : d.isSintomas() ? "Con síntomas" : "Sin síntomas",};
                 modelo.addRow(rows);
                 i++;
             }
@@ -190,6 +189,17 @@ public class CalculosControlador {
     public Vacuna buscarEnListaVacuna(List<Vacuna> datos, int id) {
         Vacuna res = null;
         for (Vacuna d : datos) {
+            if (d.getId() == id) {
+                res = d;
+                break;
+            }
+        }
+        return res;
+    }
+
+    public Persona buscarEnListaPersona(List<Persona> datos, int id) {
+        Persona res = null;
+        for (Persona d : datos) {
             if (d.getId() == id) {
                 res = d;
                 break;

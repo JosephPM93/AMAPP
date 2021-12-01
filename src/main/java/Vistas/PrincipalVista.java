@@ -15,24 +15,12 @@ import Modelos.Persona;
 import Modelos.PersonaDosisVacuna;
 import Modelos.PersonaPCR;
 import Modelos.Vacuna;
-import java.awt.Component;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import java.util.List;
-import javax.swing.AbstractCellEditor;
 import javax.swing.DefaultListModel;
-import javax.swing.JButton;
 import javax.swing.JDialog;
-import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
-import javax.swing.table.AbstractTableModel;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableCellEditor;
-import javax.swing.table.TableCellRenderer;
 
 /**
  *
@@ -58,6 +46,7 @@ public class PrincipalVista extends javax.swing.JFrame {
 
     CoreCRUDControlador coreCrud = new CoreCRUDControlador();
     ConsultasControlador cons = new ConsultasControlador();
+    CalculosControlador cal = new CalculosControlador();
 
     /**
      * Creates new form MainView
@@ -87,8 +76,6 @@ public class PrincipalVista extends javax.swing.JFrame {
         this.JTable_Personas.setDefaultEditor(Object.class, null);
         this.JTable_Personas.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
     }
-
-
 
     public void NuevaPCR_Dosis_Vacuna(Object type, String tabla) {
         String Nombre = "";
@@ -759,7 +746,20 @@ public class PrincipalVista extends javax.swing.JFrame {
     private void JBTN_seleccionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JBTN_seleccionarActionPerformed
         // TODO add your handling code here:
         if (this.JTable_Personas.getSelectedRow() != -1) {
-            
+            JDialog rfv = new DetallesPersonaVista(
+                    cal.buscarEnListaPersona(
+                            ListaPersonas,
+                            (int) this.JTable_Personas.getValueAt(
+                                    this.JTable_Personas.getSelectedRow(),
+                                    0
+                            )
+                    )
+            );
+            rfv.setModal(true);
+            rfv.enableInputMethods(true);
+            rfv.setVisible(true);
+        } else {
+            cons.NoHaySeleccionMensaje();
         }
     }//GEN-LAST:event_JBTN_seleccionarActionPerformed
 
