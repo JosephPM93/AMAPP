@@ -27,23 +27,23 @@ import javax.swing.table.DefaultTableModel;
  * @author José Padilla
  */
 public class PrincipalVista extends javax.swing.JFrame {
-
+    
     List<Vacuna> ListaVacunas;
     List<PCR> ListaPCR;
     List<Dosis> ListaDosis;
-
+    
     List<Persona> ListaPersonas;
-
+    
     DefaultListModel JListModelVacunas;
     DefaultListModel JListModelPCR;
     DefaultListModel JListModelDosis;
-
+    
     DefaultTableModel JTableModelPersonas;
-
+    
     RegistroFormularioVista rfv;
-
+    
     Validaciones valid = new Validaciones();
-
+    
     CoreCRUDControlador coreCrud = new CoreCRUDControlador();
     ConsultasControlador cons = new ConsultasControlador();
     CalculosControlador cal = new CalculosControlador();
@@ -55,7 +55,7 @@ public class PrincipalVista extends javax.swing.JFrame {
         initComponents();
         this.setLocationRelativeTo(null);
     }
-
+    
     public PrincipalVista(List<Vacuna> ListaVacunas, List<PCR> ListaPCR, List<Dosis> ListaDosis, List<Persona> ListaPersonas) {
         initComponents();
         this.setLocationRelativeTo(null);
@@ -65,18 +65,18 @@ public class PrincipalVista extends javax.swing.JFrame {
         this.ListaPersonas = ListaPersonas;
         inicializarDatos();
     }
-
+    
     private void inicializarDatos() {
-
+        
         this.JList_Vacuna.setModel(CalculosControlador.rellenarListaVacuna(JListModelVacunas, ListaVacunas));
         this.JList_PCR.setModel(CalculosControlador.rellenarListaPCR(JListModelPCR, ListaPCR));
         this.JList_Dosis.setModel(CalculosControlador.rellenarListaDosis(JListModelDosis, ListaDosis));
-
+        
         this.JTable_Personas.setModel(CalculosControlador.rellenarTablaPersonas(JTableModelPersonas, ListaPersonas));
         this.JTable_Personas.setDefaultEditor(Object.class, null);
         this.JTable_Personas.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
     }
-
+    
     public void NuevaPCR_Dosis_Vacuna(Object type, String tabla) {
         String Nombre = "";
         while (true) {
@@ -120,12 +120,12 @@ public class PrincipalVista extends javax.swing.JFrame {
             }
         }
     }
-
+    
     public void ModificarPCR_Dosis_Vacuna(Object type, String tabla) {
         if ((this.JList_Dosis.getSelectedIndex() != -1 && this.JList_Dosis.getSelectedIndex() != 0)
                 || (this.JList_PCR.getSelectedIndex() != -1 && this.JList_PCR.getSelectedIndex() != 0)
                 || (this.JList_Vacuna.getSelectedIndex() != -1 && this.JList_Vacuna.getSelectedIndex() != 0)) {
-
+            
             String Nombre = "";
             while (true) {
                 Nombre = JOptionPane.showInputDialog(null, "Ingrese el nombre de " + tabla, "Ingresar datos", JOptionPane.QUESTION_MESSAGE);
@@ -186,7 +186,7 @@ public class PrincipalVista extends javax.swing.JFrame {
             cons.NoHaySeleccionMensaje();
         }
     }
-
+    
     public void EliminarPCR_Dosis_Vacuna(Object type, String tabla) {
         if ((this.JList_Dosis.getSelectedIndex() != -1 && this.JList_Dosis.getSelectedIndex() != 0)
                 || (this.JList_PCR.getSelectedIndex() != -1 && this.JList_PCR.getSelectedIndex() != 0)
@@ -732,15 +732,32 @@ public class PrincipalVista extends javax.swing.JFrame {
     private void JBTN_modificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JBTN_modificarActionPerformed
         // TODO add your handling code here:
         /*Me quede por aqui, falta colocar los datos correctamente para mandarlos al formulario y editarlos*/
+        if (this.JTable_Personas.getSelectedRow() != -1) {
+            
+            Persona caso = cal.buscarEnListaPersona(ListaPersonas,
+                    (int) this.JTable_Personas.getValueAt(
+                            this.JTable_Personas.getSelectedRow(),
+                            0
+                    ));
+            List<PersonaDosisVacuna> lpdv = coreCrud.SelectPersonaDosisVacuna(caso.getId());
+            List<PersonaPCR> lppcr = coreCrud.SelectPersonaPCR(caso.getId());
+            PersonaDosisVacuna pdv = null;
+            PersonaPCR ppcr = null;
+            if (lpdv.size() != 0) {
+                pdv = lpdv.get(0);
+            }
+            if (lppcr.size() != 0) {
+                ppcr = lppcr.get(0);
+            }
+            
+            JDialog rfv = new RegistroFormularioVista(ListaVacunas, ListaPCR, ListaDosis, caso, pdv, ppcr);
+            rfv.setModal(true);
+            rfv.enableInputMethods(true);
+            rfv.setVisible(true);
 
-        Persona caso = new Persona();
-        PersonaDosisVacuna pdv = new PersonaDosisVacuna();
-        PersonaPCR ppcr = new PersonaPCR();
-
-        /*JDialog rfv = new RegistroFormularioVista(ListaVacunas, ListaPCR, ListaDosis, caso, pdv, ppcr);
-        rfv.setModal(true);
-        rfv.enableInputMethods(true);
-        rfv.setVisible(true);*/
+        } else {
+            cons.NoHaySeleccionMensaje();
+        }
     }//GEN-LAST:event_JBTN_modificarActionPerformed
 
     private void JBTN_seleccionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JBTN_seleccionarActionPerformed
