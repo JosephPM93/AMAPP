@@ -12,6 +12,8 @@ import Libs.Validaciones;
 import Modelos.Dosis;
 import Modelos.PCR;
 import Modelos.Persona;
+import Modelos.PersonaDosisVacuna;
+import Modelos.PersonaPCR;
 import Modelos.Vacuna;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
@@ -19,14 +21,17 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.List;
+import javax.swing.AbstractCellEditor;
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JDialog;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableCellRenderer;
 
 /**
@@ -81,93 +86,9 @@ public class PrincipalVista extends javax.swing.JFrame {
         this.JTable_Personas.setModel(CalculosControlador.rellenarTablaPersonas(JTableModelPersonas, ListaPersonas));
         this.JTable_Personas.setDefaultEditor(Object.class, null);
         this.JTable_Personas.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-
-        TableCellRenderer buttonRenderer = new JTableButtonRenderer();
-        JTable_Personas.getColumn("Detalles").setCellRenderer(buttonRenderer);
     }
 
-    public static class JTableModel extends AbstractTableModel {
 
-        private static final long serialVersionUID = 1L;
-        private static final String[] COLUMN_NAMES = new String[]{"Id", "Stuff", "Button1", "Button2"};
-        private static final Class<?>[] COLUMN_TYPES = new Class<?>[]{Integer.class, String.class, JButton.class, JButton.class};
-
-        @Override
-        public int getColumnCount() {
-            return COLUMN_NAMES.length;
-        }
-
-        @Override
-        public int getRowCount() {
-            return 4;
-        }
-
-        @Override
-        public String getColumnName(int columnIndex) {
-            return COLUMN_NAMES[columnIndex];
-        }
-
-        @Override
-        public Class<?> getColumnClass(int columnIndex) {
-            return COLUMN_TYPES[columnIndex];
-        }
-
-        @Override
-        public Object getValueAt(final int rowIndex, final int columnIndex) {
-            /*Adding components*/
-            switch (columnIndex) {
-                case 0:
-                    return rowIndex;
-                case 1:
-                    return "Text for " + rowIndex;
-                case 2: // fall through
-                /*Adding button and creating click listener*/
-                case 3:
-                    final JButton button = new JButton(COLUMN_NAMES[columnIndex]);
-                    button.addActionListener(new ActionListener() {
-                        public void actionPerformed(ActionEvent arg0) {
-                            JOptionPane.showMessageDialog(JOptionPane.getFrameForComponent(button),
-                                    "Button clicked for row " + rowIndex);
-                        }
-                    });
-                    return button;
-                default:
-                    return "Error";
-            }
-        }
-    }
-
-    private static class JTableButtonMouseListener extends MouseAdapter {
-
-        private final JTable table;
-
-        public JTableButtonMouseListener(JTable table) {
-            this.table = table;
-        }
-
-        public void mouseClicked(MouseEvent e) {
-            int column = table.getColumnModel().getColumnIndexAtX(e.getX()); // get the coloum of the button
-            int row = e.getY() / table.getRowHeight(); //get the row of the button
-
-            /*Checking the row or column is valid or not*/
-            if (row < table.getRowCount() && row >= 0 && column < table.getColumnCount() && column >= 0) {
-                Object value = table.getValueAt(row, column);
-                if (value instanceof JButton) {
-                    /*perform a click event*/
-                    ((JButton) value).doClick();
-                }
-            }
-        }
-    }
-
-    private static class JTableButtonRenderer implements TableCellRenderer {
-
-        @Override
-        public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
-            JButton button = (JButton) value;
-            return button;
-        }
-    }
 
     public void NuevaPCR_Dosis_Vacuna(Object type, String tabla) {
         String Nombre = "";
@@ -402,7 +323,12 @@ public class PrincipalVista extends javax.swing.JFrame {
             }
         });
 
-        JBTN_seleccionar.setText("Seleccionar");
+        JBTN_seleccionar.setText("Ver Detalles");
+        JBTN_seleccionar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                JBTN_seleccionarActionPerformed(evt);
+            }
+        });
 
         JBTN_elminar.setText("Eliminar");
 
@@ -420,7 +346,7 @@ public class PrincipalVista extends javax.swing.JFrame {
                     .addComponent(jScrollPane1)
                     .addGroup(JP_registrosLayout.createSequentialGroup()
                         .addComponent(JL_tituloRegistros)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 471, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 469, Short.MAX_VALUE)
                         .addComponent(JTF_buscador, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(JCB_buscarPor, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -819,7 +745,23 @@ public class PrincipalVista extends javax.swing.JFrame {
     private void JBTN_modificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JBTN_modificarActionPerformed
         // TODO add your handling code here:
         /*Me quede por aqui, falta colocar los datos correctamente para mandarlos al formulario y editarlos*/
+
+        Persona caso = new Persona();
+        PersonaDosisVacuna pdv = new PersonaDosisVacuna();
+        PersonaPCR ppcr = new PersonaPCR();
+
+        /*JDialog rfv = new RegistroFormularioVista(ListaVacunas, ListaPCR, ListaDosis, caso, pdv, ppcr);
+        rfv.setModal(true);
+        rfv.enableInputMethods(true);
+        rfv.setVisible(true);*/
     }//GEN-LAST:event_JBTN_modificarActionPerformed
+
+    private void JBTN_seleccionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JBTN_seleccionarActionPerformed
+        // TODO add your handling code here:
+        if (this.JTable_Personas.getSelectedRow() != -1) {
+            
+        }
+    }//GEN-LAST:event_JBTN_seleccionarActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton JBTN_EliminarDosis;

@@ -77,7 +77,7 @@
                           <Component id="jScrollPane1" max="32767" attributes="0"/>
                           <Group type="102" attributes="0">
                               <Component id="JL_tituloRegistros" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace pref="471" max="32767" attributes="0"/>
+                              <EmptySpace pref="469" max="32767" attributes="0"/>
                               <Component id="JTF_buscador" min="-2" pref="134" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
                               <Component id="JCB_buscarPor" min="-2" pref="120" max="-2" attributes="0"/>
@@ -162,8 +162,11 @@
             </Component>
             <Component class="javax.swing.JButton" name="JBTN_seleccionar">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Seleccionar"/>
+                <Property name="text" type="java.lang.String" value="Ver Detalles"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="JBTN_seleccionarActionPerformed"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JButton" name="JBTN_elminar">
               <Properties>

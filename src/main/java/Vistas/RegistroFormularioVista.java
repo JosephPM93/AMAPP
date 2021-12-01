@@ -116,34 +116,35 @@ public class RegistroFormularioVista extends javax.swing.JDialog {
         this.JComboBox_PCR.setModel(CalculosControlador.rellenarListaPCR(ComboBoxModelPCR, ListaPCR));
         this.JComboBox_Dosis.setModel(CalculosControlador.rellenarListaDosis(ComboBoxModelDosis, ListaDosis));
 
-        if (ModoEditar && this.casoPersona != null) {
-            this.JTF_Nombres.setText(this.casoPersona.getNombres());
-            this.JTF_Apellidos.setText(this.casoPersona.getApellidos());
-            this.JTF_DUI.setText(this.casoPersona.getDui());
-            this.JDC_FechaNacimiento.setDate(this.casoPersona.getF_nacimiento());
-            if (this.casoPersona.isSexo()) {
-                this.JRBTN_M.setSelected(true);
+        if (ModoEditar) {
+            if (this.casoPersona != null) {
+                this.JTF_Nombres.setText(this.casoPersona.getNombres());
+                this.JTF_Apellidos.setText(this.casoPersona.getApellidos());
+                this.JTF_DUI.setText(this.casoPersona.getDui());
+                this.JDC_FechaNacimiento.setDate(this.casoPersona.getF_nacimiento());
+                if (this.casoPersona.isSexo()) {
+                    this.JRBTN_M.setSelected(true);
+                } else {
+                    this.JRBTN_F.setSelected(true);
+                }
+                this.JCB_Sintomas.setSelected(this.casoPersona.isSintomas());
+                this.JCB_Recuperado.setSelected(this.casoPersona.isRecuperado());
+                this.JCB_Fallecido.setSelected(this.casoPersona.isFallecido());
+                this.JTA_DatosExtras.setText(this.casoPersona.getDetalles());
+
+                if (this.pdv != null) {
+                    this.JComboBox_Dosis.setSelectedItem(cal.buscarEnListaDosis(ListaDosis, this.pdv.getDosis_id()).getNombre());
+                    this.JComboBox_Vacuna.setSelectedItem(cal.buscarEnListaVacuna(ListaVacunas, this.pdv.getVacuna_id()).getNombre());
+                    this.JDC_FechaDosis.setDate(this.pdv.getFecha_puesta());
+                }
+
+                if (this.ppcr != null) {
+                    this.JComboBox_PCR.setSelectedItem(cal.buscarEnListaPCR(ListaPCR, this.ppcr.getPcr_id()).getNombre());
+                    this.JDC_FechaPCR.setDate(this.ppcr.getFecha_realizada());
+                }
             } else {
-                this.JRBTN_F.setSelected(true);
+                cons.MensajeError();
             }
-            this.JCB_Sintomas.setSelected(this.casoPersona.isSintomas());
-            this.JCB_Recuperado.setSelected(this.casoPersona.isRecuperado());
-            this.JCB_Fallecido.setSelected(this.casoPersona.isFallecido());
-            this.JTA_DatosExtras.setText(this.casoPersona.getDetalles());
-
-            if (this.pdv != null) {
-                this.JComboBox_Dosis.setSelectedItem(cal.buscarEnListaDosis(ListaDosis, this.pdv.getDosis_id()).getNombre());
-                this.JComboBox_Vacuna.setSelectedItem(cal.buscarEnListaVacuna(ListaVacunas, this.pdv.getVacuna_id()).getNombre());
-                this.JDC_FechaDosis.setDate(this.pdv.getFecha_puesta());
-            }
-
-            if (this.ppcr != null) {
-                this.JComboBox_PCR.setSelectedItem(cal.buscarEnListaPCR(ListaPCR, this.ppcr.getPcr_id()).getNombre());
-                this.JDC_FechaPCR.setDate(this.ppcr.getFecha_realizada());
-            }
-
-        } else {
-            cons.MensajeError();
         }
     }
 

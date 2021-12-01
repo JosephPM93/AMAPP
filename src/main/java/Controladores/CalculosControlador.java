@@ -9,9 +9,13 @@ import Modelos.Dosis;
 import Modelos.PCR;
 import Modelos.Persona;
 import Modelos.Vacuna;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.List;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
+import javax.swing.JButton;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -82,7 +86,7 @@ public class CalculosControlador {
     public static DefaultTableModel rellenarTablaPersonas(DefaultTableModel modelo, List<Persona> datos) {
         modelo = new DefaultTableModel();
 
-        Object Titulos[] = {"Id", "N", "Nombre Completo", "DUI/DUI Responsable", "Edad", "Sexo", "Última dosis", "Prueba PCR", "Estado", "Detalles"};
+        Object Titulos[] = {"Id", "N", "Nombre Completo", "DUI/DUI Responsable", "Edad", "Sexo", "Última dosis", "Prueba PCR", "Estado"};
         modelo.setColumnIdentifiers(Titulos);
         modelo.getDataVector().removeAllElements();
 
@@ -94,9 +98,12 @@ public class CalculosControlador {
                     i,
                     d.getNombres() + " " + d.getApellidos(),
                     d.getDui(),
+                    d.getF_nacimiento(),
                     d.isSexo() ? "Masculino" : "Femenino",
+                    "vacio",
+                    "vacio",
                     d.isFallecido() ? "Fallecido" : d.isRecuperado() ? "Recuperado" : d.isSintomas() ? "Con síntomas" : "Sin síntomas",
-                    "Click para ver",};
+                };
                 modelo.addRow(rows);
                 i++;
             }
@@ -168,7 +175,7 @@ public class CalculosControlador {
         }
         return res;
     }
-    
+
     public PCR buscarEnListaPCR(List<PCR> datos, int id) {
         PCR res = null;
         for (PCR d : datos) {
@@ -179,7 +186,7 @@ public class CalculosControlador {
         }
         return res;
     }
-    
+
     public Vacuna buscarEnListaVacuna(List<Vacuna> datos, int id) {
         Vacuna res = null;
         for (Vacuna d : datos) {

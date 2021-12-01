@@ -100,6 +100,27 @@ public class CoreCRUDControlador {
             return null;
         }
     }
+    
+        //Creacion de metdo select para PersonaDosisVacuna
+    /**
+     * En este metodo se intenta obtener de una tabla pivote la seleccion de 
+     * Persona, Dosis o Vacuna por medio de la DB agregandola a la lista de 
+     * tipo objecto de la clase PersonaDosisVacuna.
+     * @param id
+     * @return ListaDatos - Retonor de la lista con elementos agregados.
+     **/
+    public List<PersonaDosisVacuna> SelectPersonaDosisVacuna(int id) {
+        try {
+            con.setSession(con.getSessionFactory().openSession());
+            con.getSession().beginTransaction();
+            List<PersonaDosisVacuna> ListaDatos = con.getSession().createQuery("from persona_dosis_vacuna where Persona_id="+id).getResultList();
+            con.getSession().close();
+            return ListaDatos;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
 
     //Creacion de metodo select PersonaPCR
     /**
@@ -112,6 +133,25 @@ public class CoreCRUDControlador {
             con.setSession(con.getSessionFactory().openSession());
             con.getSession().beginTransaction();
             List<PersonaPCR> ListaDatos = con.getSession().createQuery("from persona_pcr").getResultList();
+            con.getSession().close();
+            return ListaDatos;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+    
+        //Creacion de metodo select PersonaPCR
+    /**
+     * En este metodo se intenta obtener la PersonaPCR seleccionada, por medio de la 
+     * DB agregandola a la lista de tipo objecto de la clase PersonaPCR.
+     * @return ListaDatos - Retonor de la lista con elementos agregados.
+     **/
+    public List<PersonaPCR> SelectPersonaPCR(int id) {
+        try {
+            con.setSession(con.getSessionFactory().openSession());
+            con.getSession().beginTransaction();
+            List<PersonaPCR> ListaDatos = con.getSession().createQuery("from persona_pcr where Persona_id = "+id).getResultList();
             con.getSession().close();
             return ListaDatos;
         } catch (Exception e) {
