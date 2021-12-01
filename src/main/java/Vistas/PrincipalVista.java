@@ -396,6 +396,11 @@ public class PrincipalVista extends javax.swing.JFrame {
         });
 
         JBTN_modificar.setText("Modificar");
+        JBTN_modificar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                JBTN_modificarActionPerformed(evt);
+            }
+        });
 
         JBTN_seleccionar.setText("Seleccionar");
 
@@ -810,6 +815,11 @@ public class PrincipalVista extends javax.swing.JFrame {
         // TODO add your handling code here:
         EliminarPCR_Dosis_Vacuna(Vacuna.class, "Vacuna");
     }//GEN-LAST:event_JBTN_EliminarVacunaActionPerformed
+
+    private void JBTN_modificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JBTN_modificarActionPerformed
+        // TODO add your handling code here:
+        /*Me quede por aqui, falta colocar los datos correctamente para mandarlos al formulario y editarlos*/
+    }//GEN-LAST:event_JBTN_modificarActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton JBTN_EliminarDosis;
