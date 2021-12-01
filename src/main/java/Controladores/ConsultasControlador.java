@@ -19,10 +19,24 @@ public class ConsultasControlador {
         JOptionPane.showMessageDialog(null, "Datos guardados correctamente", "Ok", JOptionPane.INFORMATION_MESSAGE);
     }
     /**
+     * Metodo para mostrar que los datos han sido guardados con exito
+     * @param mensaje
+     **/
+    public void DatosGuardadosMensaje(String mensaje) {
+        JOptionPane.showMessageDialog(null, "Datos guardados correctamente "+mensaje, "Ok", JOptionPane.INFORMATION_MESSAGE);
+    }
+    /**
      * Metodo para mostrar que hubo un problema con el almacenamiento de los datos
      **/
     public void MensajeError() {
         JOptionPane.showMessageDialog(null, "¡Hubo un problema!", "Error", JOptionPane.ERROR_MESSAGE);
+    }
+    /**
+     * Metodo para mostrar que hubo un problema con el almacenamiento de los datos
+     * @param mensaje
+     **/
+    public void MensajeError(String mensaje) {
+        JOptionPane.showMessageDialog(null, "¡Hubo un problema!"+mensaje, "Error", JOptionPane.ERROR_MESSAGE);
     }
     /**
      * Metodo para mostrar que el valor ingresado no es valido

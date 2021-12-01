@@ -151,11 +151,6 @@
               </Constraints>
             </Component>
             <Component class="com.toedter.calendar.JDateChooser" name="JDC_FechaNacimiento">
-              <Properties>
-                <Property name="icon" type="javax.swing.ImageIcon" editor="org.netbeans.modules.form.ComponentChooserEditor">
-                  <ComponentRef name="default"/>
-                </Property>
-              </Properties>
               <Constraints>
                 <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignGridBagLayout" value="org.netbeans.modules.form.compat2.layouts.DesignGridBagLayout$GridBagConstraintsDescription">
                   <GridBagConstraints gridX="1" gridY="3" gridWidth="1" gridHeight="1" fill="2" ipadX="0" ipadY="0" insetsTop="2" insetsLeft="0" insetsBottom="2" insetsRight="0" anchor="10" weightX="2.0" weightY="0.0"/>
@@ -319,7 +314,7 @@
                 </Constraint>
               </Constraints>
             </Component>
-            <Component class="javax.swing.JLabel" name="jLabel9">
+            <Component class="javax.swing.JLabel" name="JL_Vacuna">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Vacuna"/>
               </Properties>
