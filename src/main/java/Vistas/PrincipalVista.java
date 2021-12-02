@@ -9,6 +9,7 @@ import Controladores.CalculosControlador;
 import Controladores.ConsultasControlador;
 import Controladores.CoreCRUDControlador;
 import Libs.Validaciones;
+import Modelos.Conexion;
 import Modelos.Dosis;
 import Modelos.PCR;
 import Modelos.Persona;
@@ -21,29 +22,30 @@ import javax.swing.JDialog;
 import javax.swing.JOptionPane;
 import javax.swing.ListSelectionModel;
 import javax.swing.table.DefaultTableModel;
+import org.jfree.data.category.DefaultCategoryDataset;
 
 /**
  *
  * @author José Padilla
  */
 public class PrincipalVista extends javax.swing.JFrame {
-    
+
     List<Vacuna> ListaVacunas;
     List<PCR> ListaPCR;
     List<Dosis> ListaDosis;
-    
+
     List<Persona> ListaPersonas;
-    
+
     DefaultListModel JListModelVacunas;
     DefaultListModel JListModelPCR;
     DefaultListModel JListModelDosis;
-    
+
     DefaultTableModel JTableModelPersonas;
-    
+
     RegistroFormularioVista rfv;
-    
+
     Validaciones valid = new Validaciones();
-    
+
     CoreCRUDControlador coreCrud = new CoreCRUDControlador();
     ConsultasControlador cons = new ConsultasControlador();
     CalculosControlador cal = new CalculosControlador();
@@ -55,29 +57,29 @@ public class PrincipalVista extends javax.swing.JFrame {
         initComponents();
         this.setLocationRelativeTo(null);
     }
-    
+
     public PrincipalVista(List<Vacuna> ListaVacunas, List<PCR> ListaPCR, List<Dosis> ListaDosis, List<Persona> ListaPersonas) {
         initComponents();
         this.setLocationRelativeTo(null);
         inicializarDatos(ListaVacunas, ListaPCR, ListaDosis, ListaPersonas);
     }
-    
+
     private void inicializarDatos(List<Vacuna> ListaVacunas, List<PCR> ListaPCR, List<Dosis> ListaDosis, List<Persona> ListaPersonas) {
-        
+
         this.ListaVacunas = ListaVacunas;
         this.ListaPCR = ListaPCR;
         this.ListaDosis = ListaDosis;
         this.ListaPersonas = ListaPersonas;
-        
+
         this.JList_Vacuna.setModel(CalculosControlador.rellenarListaVacuna(JListModelVacunas, this.ListaVacunas));
         this.JList_PCR.setModel(CalculosControlador.rellenarListaPCR(JListModelPCR, this.ListaPCR));
         this.JList_Dosis.setModel(CalculosControlador.rellenarListaDosis(JListModelDosis, this.ListaDosis));
-        
+
         this.JTable_Personas.setModel(CalculosControlador.rellenarTablaPersonas(JTableModelPersonas, this.ListaPersonas, this.ListaVacunas, this.ListaPCR, this.ListaDosis));
         this.JTable_Personas.setDefaultEditor(Object.class, null);
         this.JTable_Personas.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
     }
-    
+
     public void NuevaPCR_Dosis_Vacuna(Object type, String tabla) {
         String Nombre = "";
         while (true) {
@@ -121,12 +123,12 @@ public class PrincipalVista extends javax.swing.JFrame {
             }
         }
     }
-    
+
     public void ModificarPCR_Dosis_Vacuna(Object type, String tabla) {
         if ((this.JList_Dosis.getSelectedIndex() != -1 && this.JList_Dosis.getSelectedIndex() != 0)
                 || (this.JList_PCR.getSelectedIndex() != -1 && this.JList_PCR.getSelectedIndex() != 0)
                 || (this.JList_Vacuna.getSelectedIndex() != -1 && this.JList_Vacuna.getSelectedIndex() != 0)) {
-            
+
             String Nombre = "";
             while (true) {
                 Nombre = JOptionPane.showInputDialog(null, "Ingrese el nombre de " + tabla, "Ingresar datos", JOptionPane.QUESTION_MESSAGE);
@@ -187,7 +189,7 @@ public class PrincipalVista extends javax.swing.JFrame {
             cons.NoHaySeleccionMensaje();
         }
     }
-    
+
     public void EliminarPCR_Dosis_Vacuna(Object type, String tabla) {
         if ((this.JList_Dosis.getSelectedIndex() != -1 && this.JList_Dosis.getSelectedIndex() != 0)
                 || (this.JList_PCR.getSelectedIndex() != -1 && this.JList_PCR.getSelectedIndex() != 0)
@@ -234,6 +236,9 @@ public class PrincipalVista extends javax.swing.JFrame {
 
         JTBP_pestanias = new javax.swing.JTabbedPane();
         jPanel1 = new javax.swing.JPanel();
+        jPanel6 = new javax.swing.JPanel();
+        JBTN_graficActualizar = new javax.swing.JButton();
+        jPanel8 = new javax.swing.JPanel();
         JP_registros = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         JTable_Personas = new javax.swing.JTable();
@@ -272,15 +277,42 @@ public class PrincipalVista extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
+        jPanel6.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        JBTN_graficActualizar.setText("Actualizar");
+        JBTN_graficActualizar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                JBTN_graficActualizarActionPerformed(evt);
+            }
+        });
+        jPanel6.add(JBTN_graficActualizar, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 70, -1, -1));
+
+        jPanel8.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+
+        javax.swing.GroupLayout jPanel8Layout = new javax.swing.GroupLayout(jPanel8);
+        jPanel8.setLayout(jPanel8Layout);
+        jPanel8Layout.setHorizontalGroup(
+            jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 348, Short.MAX_VALUE)
+        );
+        jPanel8Layout.setVerticalGroup(
+            jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 288, Short.MAX_VALUE)
+        );
+
+        jPanel6.add(jPanel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 350, 290));
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1260, Short.MAX_VALUE)
+            .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 605, Short.MAX_VALUE)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, 552, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 60, Short.MAX_VALUE))
         );
 
         JTBP_pestanias.addTab("Estadísticas", jPanel1);
@@ -320,6 +352,11 @@ public class PrincipalVista extends javax.swing.JFrame {
         });
 
         JBTN_elminar.setText("Eliminar");
+        JBTN_elminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                JBTN_elminarActionPerformed(evt);
+            }
+        });
 
         JCB_buscarPor.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
@@ -743,7 +780,6 @@ public class PrincipalVista extends javax.swing.JFrame {
 
     private void JBTN_modificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JBTN_modificarActionPerformed
         // TODO add your handling code here:
-        /*Me quede por aqui, falta colocar los datos correctamente para mandarlos al formulario y editarlos*/
         if (this.JTable_Personas.getSelectedRow() != -1) {
             Persona caso = cal.buscarEnListaPersona(ListaPersonas,
                     (int) this.JTable_Personas.getValueAt(
@@ -760,12 +796,12 @@ public class PrincipalVista extends javax.swing.JFrame {
             if (lppcr.size() != 0) {
                 ppcr = lppcr.get(0);
             }
-            
+
             JDialog rfv = new RegistroFormularioVista(ListaVacunas, ListaPCR, ListaDosis, caso, pdv, ppcr);
             rfv.setModal(true);
             rfv.enableInputMethods(true);
             rfv.setVisible(true);
-            
+
         } else {
             cons.NoHaySeleccionMensaje();
         }
@@ -793,8 +829,56 @@ public class PrincipalVista extends javax.swing.JFrame {
 
     private void JTF_RefrescarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JTF_RefrescarActionPerformed
         // TODO add your handling code here:
-        this.inicializarDatos(coreCrud.SelectVacuna(), coreCrud.SelectPCR(),coreCrud.SelectDosis(), coreCrud.SelectPersona());
+        this.inicializarDatos(coreCrud.SelectVacuna(), coreCrud.SelectPCR(), coreCrud.SelectDosis(), coreCrud.SelectPersona());
     }//GEN-LAST:event_JTF_RefrescarActionPerformed
+
+    private void JBTN_elminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JBTN_elminarActionPerformed
+        // TODO add your handling code here:
+        if (this.JTable_Personas.getSelectedRow() != -1) {
+            Persona caso = cal.buscarEnListaPersona(ListaPersonas,
+                    (int) this.JTable_Personas.getValueAt(
+                            this.JTable_Personas.getSelectedRow(),
+                            0
+                    ));
+            List<PersonaDosisVacuna> lpdv = coreCrud.SelectPersonaDosisVacuna(caso.getId());
+            List<PersonaPCR> lppcr = coreCrud.SelectPersonaPCR(caso.getId());
+            PersonaDosisVacuna pdv = null;
+            PersonaPCR ppcr = null;
+            if (lpdv.size() != 0) {
+                pdv = lpdv.get(0);
+                if (coreCrud.Delete(pdv)) {
+                    cons.DatosGuardadosMensaje("\nSe realizó la eliminación de Datos: \nDosis, Vacuna de la persona seleccionada");
+                } else {
+                    cons.MensajeError("\nNo realizó la eliminación de Datos: \nDosis, Vacuna de la persona seleccionada");
+                }
+
+            }
+            if (lppcr.size() != 0) {
+                ppcr = lppcr.get(0);
+                if (coreCrud.Delete(ppcr)) {
+                    cons.DatosGuardadosMensaje("\nSe realizó la eliminación de Datos: \nPcr de la persona seleccionada");
+                } else {
+                    cons.MensajeError("\nNo realizó la eliminación de Datos: \nPcr de la persona seleccionada");
+                }
+            }
+
+            if (coreCrud.Delete(caso)) {
+                cons.DatosGuardadosMensaje("\nSe realizó la eliminación de Datos: \nPersona seleccionada");
+            } else {
+                cons.MensajeError("\nNo realizó la eliminación de Datos: \nPersona seleccionada");
+            }
+
+
+        } else {
+            cons.NoHaySeleccionMensaje();
+        }
+    }//GEN-LAST:event_JBTN_elminarActionPerformed
+
+    private void JBTN_graficActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JBTN_graficActualizarActionPerformed
+        // TODO add your handling code here:   
+        DefaultCategoryDataset dcd = new DefaultCategoryDataset();
+
+    }//GEN-LAST:event_JBTN_graficActualizarActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton JBTN_EliminarDosis;
@@ -807,6 +891,7 @@ public class PrincipalVista extends javax.swing.JFrame {
     private javax.swing.JButton JBTN_NuevaPCR;
     private javax.swing.JButton JBTN_NuevaVacuna;
     private javax.swing.JButton JBTN_elminar;
+    private javax.swing.JButton JBTN_graficActualizar;
     private javax.swing.JButton JBTN_modificar;
     private javax.swing.JButton JBTN_nuevo;
     private javax.swing.JButton JBTN_seleccionar;
@@ -829,7 +914,9 @@ public class PrincipalVista extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
+    private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel7;
+    private javax.swing.JPanel jPanel8;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
