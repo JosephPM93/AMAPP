@@ -67,6 +67,22 @@ public class Persona {
         this.Detalles = Detalles;
     }
     
+    public static int[] estadisticas() {
+        int[] datos = new int[3];
+        Conexion c = new Conexion();
+        
+        Long count = ((Long) c.getSession().createQuery("select count(*) from personas where Recuperado = 0 AND Fallecido = 0").uniqueResult());
+        datos[0] = count.intValue();
+        
+        count = ((Long) c.getSession().createQuery("select count(*) from personas where Recuperado = 1").uniqueResult());
+        datos[1] = count.intValue();
+        
+        count = ((Long) c.getSession().createQuery("select count(*) from personas where Fallecido = 1").uniqueResult());
+        datos[2] = count.intValue();
+
+        return datos;
+    }
+    
     public Persona() {
     }
 
