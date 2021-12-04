@@ -35,7 +35,6 @@ import org.jfree.data.category.DefaultCategoryDataset;
  * @author José Padilla
  */
 public class PrincipalVista extends javax.swing.JFrame {
-
     List<Vacuna> ListaVacunas;
     List<PCR> ListaPCR;
     List<Dosis> ListaDosis;
@@ -61,7 +60,7 @@ public class PrincipalVista extends javax.swing.JFrame {
      */
     public PrincipalVista() {
         initComponents();
-        InicializarGrafia();
+        InicializarGrafica();
         this.setLocationRelativeTo(null);
     }
 
@@ -232,16 +231,21 @@ public class PrincipalVista extends javax.swing.JFrame {
         }
     }
     
-    public void InicializarGrafia(){
+    public void InicializarGrafica(){
       DefaultCategoryDataset dcd = new DefaultCategoryDataset();
-      int a=4,b=6,c=1;
-      dcd.setValue(a,"Dato","nombre1");
-      dcd.setValue(b,"Dato2","nombre2");
-      dcd.setValue(c,"Dato3","nombre3");
+      int a,r,f;
+      int[] estadisticas = Persona.estadisticas();
+      a = estadisticas[0];
+      r = estadisticas[1];
+      f = estadisticas[2];
+      
+      dcd.setValue(a,"Activos","Activos");
+      dcd.setValue(r,"Recuperados","Recuperados");
+      dcd.setValue(f,"Fallecidos","Fallecidos");
       JFreeChart grafico_barras = ChartFactory.createBarChart(
-            "GRAFICA",  //nombre del grafico
-            "Tiempo",  //nombre de las barras o columnas
-            "Caso",  //nombre de la numeracion
+            "Casos covid 2021",  //nombre del grafico
+            "Estado",  //nombre de las barras o columnas
+            "Casos",  //nombre de la numeracion
             dcd,  //datos del grafico
             PlotOrientation.VERTICAL,  //orientacion
             true,  //legenda de barras individuales por color
@@ -271,7 +275,6 @@ public class PrincipalVista extends javax.swing.JFrame {
         jPanel6 = new javax.swing.JPanel();
         JBTN_graficActualizar = new javax.swing.JButton();
         jPanel8 = new javax.swing.JPanel();
-        jComboBox1 = new javax.swing.JComboBox<>();
         JP_registros = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         JTable_Personas = new javax.swing.JTable();
@@ -334,9 +337,6 @@ public class PrincipalVista extends javax.swing.JFrame {
         );
 
         jPanel6.add(jPanel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 350, 290));
-
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        jPanel6.add(jComboBox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(1260, 20, -1, -1));
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -910,7 +910,7 @@ public class PrincipalVista extends javax.swing.JFrame {
 
     private void JBTN_graficActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JBTN_graficActualizarActionPerformed
         // TODO add your handling code here:   
-        InicializarGrafia();
+        InicializarGrafica();
     }//GEN-LAST:event_JBTN_graficActualizarActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -942,7 +942,6 @@ public class PrincipalVista extends javax.swing.JFrame {
     private javax.swing.JButton jButton7;
     private javax.swing.JButton jButton8;
     private javax.swing.JButton jButton9;
-    private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
