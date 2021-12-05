@@ -9,17 +9,16 @@ import Controladores.CalculosControlador;
 import Controladores.ConsultasControlador;
 import Controladores.CoreCRUDControlador;
 import Libs.Validaciones;
-import Modelos.Conexion;
 import Modelos.Dosis;
 import Modelos.PCR;
 import Modelos.Persona;
 import Modelos.PersonaDosisVacuna;
 import Modelos.PersonaPCR;
 import Modelos.Vacuna;
+import com.toedter.calendar.JCalendar;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.util.List;
-import java.util.Locale;
 import javax.swing.DefaultListModel;
 import javax.swing.JDialog;
 import javax.swing.JOptionPane;
@@ -37,6 +36,7 @@ import org.jfree.data.general.DefaultPieDataset;
  * @author José Padilla
  */
 public class PrincipalVista extends javax.swing.JFrame {
+
     List<Vacuna> ListaVacunas;
     List<PCR> ListaPCR;
     List<Dosis> ListaDosis;
@@ -62,7 +62,7 @@ public class PrincipalVista extends javax.swing.JFrame {
      */
     public PrincipalVista() {
         initComponents();
-        InicializarGrafica();
+        //InicializarGrafica();
         this.setLocationRelativeTo(null);
     }
 
@@ -86,6 +86,10 @@ public class PrincipalVista extends javax.swing.JFrame {
         this.JTable_Personas.setModel(CalculosControlador.rellenarTablaPersonas(JTableModelPersonas, this.ListaPersonas, this.ListaVacunas, this.ListaPCR, this.ListaDosis));
         this.JTable_Personas.setDefaultEditor(Object.class, null);
         this.JTable_Personas.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+
+        if (ListaPersonas.size() != 0) {
+            this.JDC_fechaRegistros.setDate(this.ListaPersonas.get(0).getFecha_ingreso());
+        }
     }
 
     public void NuevaPCR_Dosis_Vacuna(Object type, String tabla) {
@@ -232,8 +236,8 @@ public class PrincipalVista extends javax.swing.JFrame {
             }
         }
     }
-    
-    public void InicializarGrafica(){
+
+    /*public void InicializarGrafica(){
       DefaultCategoryDataset dcd = new DefaultCategoryDataset();
       int a,r,f;
       int[] estadisticas = Persona.estadisticas();
@@ -263,7 +267,7 @@ public class PrincipalVista extends javax.swing.JFrame {
       jPanel8.add(panel, BorderLayout.NORTH);
       /*
       ====================================================================
-      */
+      *
       DefaultCategoryDataset dcd2 = new DefaultCategoryDataset();
       int Decesos = 7;
       dcd2.setValue(Decesos, "Dato","SiguienteDato");
@@ -285,7 +289,7 @@ public class PrincipalVista extends javax.swing.JFrame {
       jPanel9.add(panel2, BorderLayout.NORTH);
       /*
       ====================================================================
-      */
+      *
       int CasosGrupoEtario = 2;
       DefaultPieDataset dpd = new DefaultPieDataset();
       dpd.setValue("GraficaPastel",CasosGrupoEtario);
@@ -306,7 +310,7 @@ public class PrincipalVista extends javax.swing.JFrame {
       jPanel11.add(panel3, BorderLayout.NORTH);
       /*
       ====================================================================
-      */
+      *
       int DesesosGrupoEtario = 1;
       DefaultPieDataset dpd2 = new DefaultPieDataset();
       dpd2.setValue("GraficaPastel",DesesosGrupoEtario);
@@ -344,6 +348,7 @@ public class PrincipalVista extends javax.swing.JFrame {
         jPanel6 = new javax.swing.JPanel();
         JBTN_graficActualizar = new javax.swing.JButton();
         jPanel8 = new javax.swing.JPanel();
+        jComboBox1 = new javax.swing.JComboBox<>();
         jPanel9 = new javax.swing.JPanel();
         jPanel10 = new javax.swing.JPanel();
         jPanel11 = new javax.swing.JPanel();
@@ -394,7 +399,7 @@ public class PrincipalVista extends javax.swing.JFrame {
                 JBTN_graficActualizarActionPerformed(evt);
             }
         });
-        jPanel6.add(JBTN_graficActualizar, new org.netbeans.lib.awtextra.AbsoluteConstraints(1160, 20, -1, -1));
+        jPanel6.add(JBTN_graficActualizar, new org.netbeans.lib.awtextra.AbsoluteConstraints(1160, 40, -1, -1));
 
         jPanel8.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
@@ -409,8 +414,10 @@ public class PrincipalVista extends javax.swing.JFrame {
             .addGap(0, 148, Short.MAX_VALUE)
         );
 
-        jPanel6.add(jPanel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 30, 200, 150));
+        jPanel6.add(jPanel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 70, 200, 150));
 
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jPanel6.add(jComboBox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(1260, 40, -1, -1));
 
         jPanel9.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
@@ -425,7 +432,7 @@ public class PrincipalVista extends javax.swing.JFrame {
             .addGap(0, 148, Short.MAX_VALUE)
         );
 
-        jPanel6.add(jPanel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 30, 200, 150));
+        jPanel6.add(jPanel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 70, 200, 150));
 
         jPanel10.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
@@ -440,7 +447,7 @@ public class PrincipalVista extends javax.swing.JFrame {
             .addGap(0, 148, Short.MAX_VALUE)
         );
 
-        jPanel6.add(jPanel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(940, 30, 200, 150));
+        jPanel6.add(jPanel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(940, 70, 200, 150));
 
         jPanel11.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
@@ -455,7 +462,7 @@ public class PrincipalVista extends javax.swing.JFrame {
             .addGap(0, 148, Short.MAX_VALUE)
         );
 
-        jPanel6.add(jPanel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 30, 200, 150));
+        jPanel6.add(jPanel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 70, 200, 150));
 
         JL_estadistica.setText("Estadistica");
         jPanel6.add(JL_estadistica, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 10, -1, -1));
@@ -987,7 +994,7 @@ public class PrincipalVista extends javax.swing.JFrame {
 
     private void JTF_RefrescarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JTF_RefrescarActionPerformed
         // TODO add your handling code here:
-        this.inicializarDatos(coreCrud.SelectVacuna(), coreCrud.SelectPCR(), coreCrud.SelectDosis(), coreCrud.SelectPersona());
+        this.inicializarDatos(coreCrud.SelectVacuna(), coreCrud.SelectPCR(), coreCrud.SelectDosis(), coreCrud.SelectPersona(new java.sql.Date(this.JDC_fechaRegistros.getCalendar().getTime().getTime())));
     }//GEN-LAST:event_JTF_RefrescarActionPerformed
 
     private void JBTN_elminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JBTN_elminarActionPerformed
@@ -1032,7 +1039,7 @@ public class PrincipalVista extends javax.swing.JFrame {
 
     private void JBTN_graficActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JBTN_graficActualizarActionPerformed
         // TODO add your handling code here:   
-        InicializarGrafica();
+        // InicializarGrafica();
     }//GEN-LAST:event_JBTN_graficActualizarActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -1065,6 +1072,7 @@ public class PrincipalVista extends javax.swing.JFrame {
     private javax.swing.JButton jButton7;
     private javax.swing.JButton jButton8;
     private javax.swing.JButton jButton9;
+    private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel10;
     private javax.swing.JPanel jPanel11;

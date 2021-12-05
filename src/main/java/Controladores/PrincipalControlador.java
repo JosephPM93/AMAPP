@@ -6,6 +6,7 @@
 package Controladores;
 
 import Vistas.PrincipalVista;
+import com.toedter.calendar.JCalendar;
 
 /**
  *
@@ -45,7 +46,7 @@ public class PrincipalControlador {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new PrincipalVista(core.SelectVacuna(), core.SelectPCR(), core.SelectDosis(), core.SelectPersona()).setVisible(true);
+                new PrincipalVista(core.SelectVacuna(), core.SelectPCR(), core.SelectDosis(), core.SelectPersona(new java.sql.Date(new JCalendar().getCalendar().getTime().getTime()))).setVisible(true);
             }
         });
         

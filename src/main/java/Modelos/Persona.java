@@ -41,8 +41,10 @@ public class Persona {
     private boolean Fallecido;
     @Column(name = "Detalles")
     private String Detalles;
+    @Column(name = "Fecha_ingreso")
+    private Date Fecha_ingreso;
 
-    public Persona(int Id, String Nombres, String Apellidos, String Dui, Date F_nacimiento, boolean Sexo, boolean Sintomas, boolean Recuperado, boolean Fallecido, String Detalles) {
+    public Persona(int Id, String Nombres, String Apellidos, String Dui, Date F_nacimiento, boolean Sexo, boolean Sintomas, boolean Recuperado, boolean Fallecido, String Detalles, Date Fecha_ingreso) {
         this.Id = Id;
         this.Nombres = Nombres;
         this.Apellidos = Apellidos;
@@ -53,9 +55,10 @@ public class Persona {
         this.Recuperado = Recuperado;
         this.Fallecido = Fallecido;
         this.Detalles = Detalles;
+        this.Fecha_ingreso = Fecha_ingreso;
     }
 
-    public Persona(String Nombres, String Apellidos, String Dui, Date F_nacimiento, boolean Sexo, boolean Sintomas, boolean Recuperado, boolean Fallecido, String Detalles) {
+    public Persona(String Nombres, String Apellidos, String Dui, Date F_nacimiento, boolean Sexo, boolean Sintomas, boolean Recuperado, boolean Fallecido, String Detalles, Date Fecha_ingreso) {
         this.Nombres = Nombres;
         this.Apellidos = Apellidos;
         this.Dui = Dui;
@@ -65,22 +68,7 @@ public class Persona {
         this.Recuperado = Recuperado;
         this.Fallecido = Fallecido;
         this.Detalles = Detalles;
-    }
-    
-    public static int[] estadisticas() {
-        int[] datos = new int[3];
-        Conexion c = new Conexion();
-        
-        Long count = ((Long) c.getSession().createQuery("select count(*) from personas where Recuperado = 0 AND Fallecido = 0").uniqueResult());
-        datos[0] = count.intValue();
-        
-        count = ((Long) c.getSession().createQuery("select count(*) from personas where Recuperado = 1").uniqueResult());
-        datos[1] = count.intValue();
-        
-        count = ((Long) c.getSession().createQuery("select count(*) from personas where Fallecido = 1").uniqueResult());
-        datos[2] = count.intValue();
-
-        return datos;
+        this.Fecha_ingreso = Fecha_ingreso;
     }
     
     public Persona() {
@@ -224,6 +212,20 @@ public class Persona {
      */
     public void setDetalles(String Detalles) {
         this.Detalles = Detalles;
+    }
+
+    /**
+     * @return the Fecha_ingreso
+     */
+    public Date getFecha_ingreso() {
+        return Fecha_ingreso;
+    }
+
+    /**
+     * @param Fecha_ingreso the Fecha_ingreso to set
+     */
+    public void setFecha_ingreso(Date Fecha_ingreso) {
+        this.Fecha_ingreso = Fecha_ingreso;
     }
 
 }

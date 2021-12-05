@@ -15,6 +15,8 @@ import Modelos.Persona;
 import Modelos.PersonaDosisVacuna;
 import Modelos.PersonaPCR;
 import Modelos.Vacuna;
+import com.toedter.calendar.JCalendar;
+import java.util.Date;
 import java.util.List;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
@@ -176,6 +178,7 @@ public class RegistroFormularioVista extends javax.swing.JDialog {
     }
 
     private Persona crearDatosPersona() {
+        Date fecha = new JCalendar().getDate();
         return new Persona(
                 this.JTF_Nombres.getText().trim(),
                 this.JTF_Apellidos.getText().trim(),
@@ -185,18 +188,20 @@ public class RegistroFormularioVista extends javax.swing.JDialog {
                 this.JCB_Sintomas.isSelected(),
                 this.JCB_Recuperado.isSelected(),
                 this.JCB_Fallecido.isSelected(),
-                this.JTA_DatosExtras.getText()
+                this.JTA_DatosExtras.getText(),
+                fecha
         );
     }
 
     private PersonaDosisVacuna crearDatosDosisVacunaPersona() {
         List<Persona> personas = coreCrud.SelectPersona();
         Persona caso = personas.get(personas.size() - 1);
-
+        System.out.println("Longitud lista dosis "+ListaDosis.size() + " longitud del combobox " +JComboBox_Dosis.getItemCount());
+        System.out.println("Longitud lista vacunas "+ListaDosis.size() + " longitud del combobox " +JComboBox_Vacuna.getItemCount());
         return new PersonaDosisVacuna(
                 caso.getId(),
-                this.ListaDosis.get(this.JComboBox_Dosis.getSelectedIndex()).getId(),
-                this.ListaVacunas.get(this.JComboBox_Vacuna.getSelectedIndex()).getId(),
+                this.ListaDosis.get(this.JComboBox_Dosis.getSelectedIndex()-1).getId(),
+                this.ListaVacunas.get(this.JComboBox_Vacuna.getSelectedIndex()-1).getId(),
                 this.JDC_FechaDosis.getDate()
         );
     }
@@ -204,10 +209,10 @@ public class RegistroFormularioVista extends javax.swing.JDialog {
     private PersonaPCR crearPersonaPCR() {
         List<Persona> personas = coreCrud.SelectPersona();
         Persona caso = personas.get(personas.size() - 1);
-
+        System.out.println("Longitud lista pcr "+ListaPCR.size() + " longitud del combobox " +JComboBox_PCR.getItemCount());
         return new PersonaPCR(
                 caso.getId(),
-                this.ListaPCR.get(this.JComboBox_PCR.getSelectedIndex()).getId(),
+                this.ListaPCR.get(this.JComboBox_PCR.getSelectedIndex()-1).getId(),
                 this.JDC_FechaPCR.getDate()
         );
     }
@@ -215,6 +220,7 @@ public class RegistroFormularioVista extends javax.swing.JDialog {
     private Persona actualizarCasoPersona() {
         Persona p = crearDatosPersona();
         p.setId(this.casoPersona.getId());
+        p.setFecha_ingreso(this.casoPersona.getFecha_ingreso());
         return p;
     }
 

@@ -51,4 +51,6 @@ public class ConsultasControlador {
         JOptionPane.showMessageDialog(null, "¡No se ha seleccionado nada!", "Error", JOptionPane.WARNING_MESSAGE);
     }
     
+    
+    
 }
