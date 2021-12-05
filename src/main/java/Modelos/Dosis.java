@@ -23,7 +23,7 @@ public class Dosis {
     private int Id;
     @Column(name = "Nombre")
     private String Nombre;
-
+    
     public Dosis(int Id, String Nombre) {
         this.Id = Id;
         this.Nombre = Nombre;
