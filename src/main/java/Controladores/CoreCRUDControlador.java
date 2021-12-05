@@ -830,6 +830,10 @@ public class CoreCRUDControlador {
     /* 
         Metodos para estadistica
      */
+    /**
+     * Este metodo se encarga de guardar en un Array la cantidad de 'Recuperados y Fallecidos'
+     * @return datos - Retorno de Array 
+     **/
     public static int[] Casos() {
         int[] datos = new int[3];
         Conexion c = new Conexion();

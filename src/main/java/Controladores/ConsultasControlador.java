@@ -15,12 +15,15 @@ public class ConsultasControlador {
     /**
      * Metodo para mostrar que los datos han sido guardados con exito
      **/
+    /**
+     * Metodo para mostrar si los datos han sido guardados exitosamente
+     **/
     public void DatosGuardadosMensaje() {
         JOptionPane.showMessageDialog(null, "Datos guardados correctamente", "Ok", JOptionPane.INFORMATION_MESSAGE);
     }
     /**
      * Metodo para mostrar que los datos han sido guardados con exito
-     * @param mensaje
+     * @param mensaje - Mensaje personalizado.
      **/
     public void DatosGuardadosMensaje(String mensaje) {
         JOptionPane.showMessageDialog(null, "Datos guardados correctamente "+mensaje, "Ok", JOptionPane.INFORMATION_MESSAGE);
@@ -33,7 +36,7 @@ public class ConsultasControlador {
     }
     /**
      * Metodo para mostrar que hubo un problema con el almacenamiento de los datos
-     * @param mensaje
+     * @param mensaje - Mensaje personalizado
      **/
     public void MensajeError(String mensaje) {
         JOptionPane.showMessageDialog(null, "¡Hubo un problema!"+mensaje, "Error", JOptionPane.ERROR_MESSAGE);

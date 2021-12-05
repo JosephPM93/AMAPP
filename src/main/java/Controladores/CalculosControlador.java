@@ -185,7 +185,12 @@ public class CalculosControlador {
         }
         return modelo;
     }
-
+    /**
+     * Este metodo sirve para buscar en la lista Dosis por medio de un parametro id, si se encuentra un elemento dentro de la lista.
+     * @param datos 
+     * @param id 
+     * @return res - Nos retorna si el valor ha sido encontrado el valor sino, nos retorna un valor null
+     **/
     public static Dosis buscarEnListaDosis(List<Dosis> datos, int id) {
         Dosis res = null;
         for (Dosis d : datos) {
@@ -196,7 +201,12 @@ public class CalculosControlador {
         }
         return res;
     }
-
+    /**
+     * Este metodo sirve para buscar en la lista PCR por medio de un parametro id, si se encuentra un elemento dentro de la lista.
+     * @param datos 
+     * @param id 
+     * @return res - Nos retorna si el valor ha sido encontrado el valor sino, nos retorna un valor null
+     **/
     public static PCR buscarEnListaPCR(List<PCR> datos, int id) {
         PCR res = null;
         for (PCR d : datos) {
@@ -207,7 +217,12 @@ public class CalculosControlador {
         }
         return res;
     }
-
+    /**
+     * Este metodo sirve para buscar en la lista Vacuna por medio de un parametro id, si se encuentra un elemento dentro de la lista.
+     * @param datos 
+     * @param id 
+     * @return res - Nos retorna si el valor ha sido encontrado el valor sino, nos retorna un valor null
+     **/
     public static Vacuna buscarEnListaVacuna(List<Vacuna> datos, int id) {
         Vacuna res = null;
         for (Vacuna d : datos) {
@@ -218,7 +233,12 @@ public class CalculosControlador {
         }
         return res;
     }
-
+    /**
+     * Este metodo sirve para buscar en la lista Persona por medio de un parametro id, si se encuentra un elemento dentro de la lista.
+     * @param datos 
+     * @param id 
+     * @return res - Nos retorna si el valor ha sido encontrado el valor sino, nos retorna un valor null
+     **/
     public static Persona buscarEnListaPersona(List<Persona> datos, int id) {
         Persona res = null;
         for (Persona d : datos) {
