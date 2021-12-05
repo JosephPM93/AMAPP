@@ -243,11 +243,7 @@
                               <Component id="JL_tituloRegistros" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
                               <Component id="JTF_Refrescar" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace pref="405" max="32767" attributes="0"/>
-                              <Component id="JTF_buscador" min="-2" pref="134" max="-2" attributes="0"/>
-                              <EmptySpace max="-2" attributes="0"/>
-                              <Component id="JCB_buscarPor" min="-2" pref="120" max="-2" attributes="0"/>
-                              <EmptySpace max="-2" attributes="0"/>
+                              <EmptySpace pref="671" max="32767" attributes="0"/>
                               <Component id="JBTN_nuevo" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
                               <Component id="JBTN_modificar" min="-2" max="-2" attributes="0"/>
@@ -274,8 +270,6 @@
                               <Component id="JBTN_modificar" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="JBTN_seleccionar" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="JBTN_elminar" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="JCB_buscarPor" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="JTF_buscador" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="JL_tituloRegistros" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="JTF_Refrescar" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
@@ -342,23 +336,6 @@
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="JBTN_elminarActionPerformed"/>
               </Events>
-            </Component>
-            <Component class="javax.swing.JComboBox" name="JCB_buscarPor">
-              <Properties>
-                <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-                  <StringArray count="4">
-                    <StringItem index="0" value="Item 1"/>
-                    <StringItem index="1" value="Item 2"/>
-                    <StringItem index="2" value="Item 3"/>
-                    <StringItem index="3" value="Item 4"/>
-                  </StringArray>
-                </Property>
-              </Properties>
-              <AuxValues>
-                <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
-              </AuxValues>
-            </Component>
-            <Component class="javax.swing.JTextField" name="JTF_buscador">
             </Component>
             <Component class="javax.swing.JLabel" name="JL_tituloRegistros">
               <Properties>

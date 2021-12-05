@@ -54,6 +54,8 @@ public class RegistroFormularioVista extends javax.swing.JDialog {
     boolean ModoEditarPDV = false;
     boolean ModoEditarPPCR = false;
 
+    Date fechaIngreso;
+
     /**
      * Creates new form RegistroFormularioVista
      */
@@ -63,7 +65,7 @@ public class RegistroFormularioVista extends javax.swing.JDialog {
         this.setResizable(false);
     }
 
-    public RegistroFormularioVista(List<Vacuna> ListaVacunas, List<PCR> ListaPCR, List<Dosis> ListaDosis) {
+    public RegistroFormularioVista(List<Vacuna> ListaVacunas, List<PCR> ListaPCR, List<Dosis> ListaDosis, Date fechaIngreso) {
         initComponents();
         this.setLocationRelativeTo(null);
         this.setTitle("Registrar nuevo caso");
@@ -81,10 +83,12 @@ public class RegistroFormularioVista extends javax.swing.JDialog {
         this.ListaVacunas = ListaVacunas;
         this.ListaPCR = ListaPCR;
         this.ListaDosis = ListaDosis;
+
+        this.fechaIngreso = fechaIngreso;
         inicializarDatos();
     }
 
-    public RegistroFormularioVista(List<Vacuna> ListaVacunas, List<PCR> ListaPCR, List<Dosis> ListaDosis, Persona casoPersona, PersonaDosisVacuna pdv, PersonaPCR pcr) {
+    public RegistroFormularioVista(List<Vacuna> ListaVacunas, List<PCR> ListaPCR, List<Dosis> ListaDosis, Persona casoPersona, PersonaDosisVacuna pdv, PersonaPCR pcr, Date fechaIngreso) {
         initComponents();
         this.setLocationRelativeTo(null);
         this.setTitle("Editar un caso");
@@ -99,6 +103,8 @@ public class RegistroFormularioVista extends javax.swing.JDialog {
         this.pdv = pdv;
         this.ppcr = pcr;
 
+        this.fechaIngreso = fechaIngreso;
+
         if (this.pdv == null) {
             this.JL_FDosis.setVisible(false);
             this.JDC_FechaDosis.setVisible(false);
@@ -106,6 +112,7 @@ public class RegistroFormularioVista extends javax.swing.JDialog {
             this.JComboBox_Vacuna.setVisible(false);
         } else {
             this.ModoEditarPDV = true;
+            System.out.println("ModoEditarPDV: " + ModoEditarPDV);
         }
 
         if (this.ppcr == null) {
@@ -113,6 +120,7 @@ public class RegistroFormularioVista extends javax.swing.JDialog {
             this.JDC_FechaPCR.setVisible(false);
         } else {
             this.ModoEditarPPCR = true;
+            System.out.println("ModoEditarPPCR: " + ModoEditarPPCR);
         }
 
         inicializarDatos();
@@ -178,8 +186,7 @@ public class RegistroFormularioVista extends javax.swing.JDialog {
     }
 
     private Persona crearDatosPersona() {
-        Date fecha = new JCalendar().getDate();
-        return new Persona(
+        Persona casoNuevo = new Persona(
                 this.JTF_Nombres.getText().trim(),
                 this.JTF_Apellidos.getText().trim(),
                 this.JTF_DUI.getText().trim(),
@@ -189,30 +196,45 @@ public class RegistroFormularioVista extends javax.swing.JDialog {
                 this.JCB_Recuperado.isSelected(),
                 this.JCB_Fallecido.isSelected(),
                 this.JTA_DatosExtras.getText(),
-                fecha
+                fechaIngreso
         );
+        if (casoPersona != null) {
+            int IdTemp = casoPersona.getId();
+            Date fechaIngresoTemp = casoPersona.getFecha_ingreso();
+            casoPersona = casoNuevo;
+            casoPersona.setId(IdTemp);
+            casoPersona.setFecha_ingreso(fechaIngresoTemp);
+        }
+        return casoNuevo;
     }
 
     private PersonaDosisVacuna crearDatosDosisVacunaPersona() {
-        List<Persona> personas = coreCrud.SelectPersona();
-        Persona caso = personas.get(personas.size() - 1);
-        System.out.println("Longitud lista dosis "+ListaDosis.size() + " longitud del combobox " +JComboBox_Dosis.getItemCount());
-        System.out.println("Longitud lista vacunas "+ListaDosis.size() + " longitud del combobox " +JComboBox_Vacuna.getItemCount());
+        Persona caso;
+        if (casoPersona == null) {
+            List<Persona> personas = coreCrud.SelectPersona();
+            caso = personas.get(personas.size() - 1);
+        } else {
+            caso = casoPersona;
+        }
         return new PersonaDosisVacuna(
                 caso.getId(),
-                this.ListaDosis.get(this.JComboBox_Dosis.getSelectedIndex()-1).getId(),
-                this.ListaVacunas.get(this.JComboBox_Vacuna.getSelectedIndex()-1).getId(),
+                this.ListaDosis.get(this.JComboBox_Dosis.getSelectedIndex() - 1).getId(),
+                this.ListaVacunas.get(this.JComboBox_Vacuna.getSelectedIndex() - 1).getId(),
                 this.JDC_FechaDosis.getDate()
         );
     }
 
     private PersonaPCR crearPersonaPCR() {
-        List<Persona> personas = coreCrud.SelectPersona();
-        Persona caso = personas.get(personas.size() - 1);
-        System.out.println("Longitud lista pcr "+ListaPCR.size() + " longitud del combobox " +JComboBox_PCR.getItemCount());
+        Persona caso;
+        if (casoPersona == null) {
+            List<Persona> personas = coreCrud.SelectPersona();
+            caso = personas.get(personas.size() - 1);
+        } else {
+            caso = casoPersona;
+        }
         return new PersonaPCR(
                 caso.getId(),
-                this.ListaPCR.get(this.JComboBox_PCR.getSelectedIndex()-1).getId(),
+                this.ListaPCR.get(this.JComboBox_PCR.getSelectedIndex() - 1).getId(),
                 this.JDC_FechaPCR.getDate()
         );
     }
@@ -227,12 +249,14 @@ public class RegistroFormularioVista extends javax.swing.JDialog {
     private PersonaDosisVacuna actualizarDatosDosisVacunaPersona() {
         PersonaDosisVacuna p = crearDatosDosisVacunaPersona();
         p.setId(this.pdv.getId());
+        p.setPersona_id(this.casoPersona.getId());
         return p;
     }
 
     private PersonaPCR actualizarPersonaPCR() {
         PersonaPCR p = crearPersonaPCR();
         p.setId(this.ppcr.getId());
+        p.setPersona_id(this.casoPersona.getId());
         return p;
     }
 
@@ -241,11 +265,27 @@ public class RegistroFormularioVista extends javax.swing.JDialog {
     }
 
     private boolean IngresarDosisVacunaPersona() {
-        return (!ModoEditarPDV) ? coreCrud.Insert(crearDatosDosisVacunaPersona()) : coreCrud.Update(actualizarDatosDosisVacunaPersona());
+        if (this.JComboBox_Dosis.getSelectedIndex() != 0 && this.JComboBox_Vacuna.getSelectedIndex() != 0) {
+            return (!ModoEditarPDV) ? coreCrud.Insert(crearDatosDosisVacunaPersona()) : coreCrud.Update(actualizarDatosDosisVacunaPersona());
+        } else {
+            if (pdv != null) {
+                return coreCrud.Delete(pdv);
+            } else {
+                return true;
+            }
+        }
     }
 
     private boolean IngresarPCRPersona() {
         return (!ModoEditarPPCR) ? coreCrud.Insert(crearPersonaPCR()) : coreCrud.Update(actualizarPersonaPCR());
+    }
+
+    private boolean EliminarDosisVacunaPersona() {
+        return coreCrud.Delete(this.pdv);
+    }
+
+    private boolean EliminarPCRPersona() {
+        return coreCrud.Delete(ppcr);
     }
 
     private boolean GuardarDatos() {
@@ -319,6 +359,15 @@ public class RegistroFormularioVista extends javax.swing.JDialog {
                 }
             }
         }
+
+        if (this.JComboBox_Dosis.getSelectedIndex() == 0 && this.pdv != null) {
+            this.EliminarDosisVacunaPersona();
+        }
+
+        if (this.JComboBox_PCR.getSelectedIndex() == 0 && this.ppcr != null) {
+            EliminarPCRPersona();
+        }
+
         return Exito;
     }
 

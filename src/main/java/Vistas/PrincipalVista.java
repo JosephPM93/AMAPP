@@ -361,8 +361,6 @@ public class PrincipalVista extends javax.swing.JFrame {
         JBTN_modificar = new javax.swing.JButton();
         JBTN_seleccionar = new javax.swing.JButton();
         JBTN_elminar = new javax.swing.JButton();
-        JCB_buscarPor = new javax.swing.JComboBox<>();
-        JTF_buscador = new javax.swing.JTextField();
         JL_tituloRegistros = new javax.swing.JLabel();
         JTF_Refrescar = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
@@ -523,8 +521,6 @@ public class PrincipalVista extends javax.swing.JFrame {
             }
         });
 
-        JCB_buscarPor.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-
         JL_tituloRegistros.setText("Registros: ");
 
         JTF_Refrescar.setText("Refrescar");
@@ -546,11 +542,7 @@ public class PrincipalVista extends javax.swing.JFrame {
                         .addComponent(JL_tituloRegistros)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(JTF_Refrescar)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 405, Short.MAX_VALUE)
-                        .addComponent(JTF_buscador, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(JCB_buscarPor, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 671, Short.MAX_VALUE)
                         .addComponent(JBTN_nuevo)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(JBTN_modificar)
@@ -573,8 +565,6 @@ public class PrincipalVista extends javax.swing.JFrame {
                         .addComponent(JBTN_modificar)
                         .addComponent(JBTN_seleccionar)
                         .addComponent(JBTN_elminar)
-                        .addComponent(JCB_buscarPor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(JTF_buscador, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(JL_tituloRegistros)
                         .addComponent(JTF_Refrescar)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -859,7 +849,7 @@ public class PrincipalVista extends javax.swing.JFrame {
 
     private void JBTN_nuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JBTN_nuevoActionPerformed
         // TODO add your handling code here:
-        JDialog rfv = new RegistroFormularioVista(ListaVacunas, ListaPCR, ListaDosis);
+        JDialog rfv = new RegistroFormularioVista(ListaVacunas, ListaPCR, ListaDosis, this.JDC_fechaRegistros.getDate());
         rfv.setModal(true);
         rfv.enableInputMethods(true);
         rfv.setVisible(true);
@@ -962,7 +952,7 @@ public class PrincipalVista extends javax.swing.JFrame {
                 ppcr = lppcr.get(0);
             }
 
-            JDialog rfv = new RegistroFormularioVista(ListaVacunas, ListaPCR, ListaDosis, caso, pdv, ppcr);
+            JDialog rfv = new RegistroFormularioVista(ListaVacunas, ListaPCR, ListaDosis, caso, pdv, ppcr, this.JDC_fechaRegistros.getDate());
             rfv.setModal(true);
             rfv.enableInputMethods(true);
             rfv.setVisible(true);
@@ -1007,9 +997,9 @@ public class PrincipalVista extends javax.swing.JFrame {
                     ));
             List<PersonaDosisVacuna> lpdv = coreCrud.SelectPersonaDosisVacuna(caso.getId());
             List<PersonaPCR> lppcr = coreCrud.SelectPersonaPCR(caso.getId());
-            PersonaDosisVacuna pdv = null;
-            PersonaPCR ppcr = null;
-            if (lpdv.size() != 0) {
+            PersonaDosisVacuna pdv;
+            PersonaPCR ppcr;
+            if (lpdv != null && !lpdv.isEmpty()) {
                 pdv = lpdv.get(0);
                 if (coreCrud.Delete(pdv)) {
                     cons.DatosGuardadosMensaje("\nSe realizó la eliminación de Datos: \nDosis, Vacuna de la persona seleccionada");
@@ -1018,7 +1008,7 @@ public class PrincipalVista extends javax.swing.JFrame {
                 }
 
             }
-            if (lppcr.size() != 0) {
+            if (lppcr != null && !lppcr.isEmpty()) {
                 ppcr = lppcr.get(0);
                 if (coreCrud.Delete(ppcr)) {
                     cons.DatosGuardadosMensaje("\nSe realizó la eliminación de Datos: \nPcr de la persona seleccionada");
@@ -1057,7 +1047,6 @@ public class PrincipalVista extends javax.swing.JFrame {
     private javax.swing.JButton JBTN_modificar;
     private javax.swing.JButton JBTN_nuevo;
     private javax.swing.JButton JBTN_seleccionar;
-    private javax.swing.JComboBox<String> JCB_buscarPor;
     private com.toedter.calendar.JDateChooser JDC_fechaRegistros;
     private javax.swing.JLabel JL_estadistica;
     private javax.swing.JLabel JL_tituloRegistros;
@@ -1067,7 +1056,6 @@ public class PrincipalVista extends javax.swing.JFrame {
     private javax.swing.JPanel JP_registros;
     private javax.swing.JTabbedPane JTBP_pestanias;
     private javax.swing.JButton JTF_Refrescar;
-    private javax.swing.JTextField JTF_buscador;
     private javax.swing.JTable JTable_Personas;
     private javax.swing.JButton jButton7;
     private javax.swing.JButton jButton8;
