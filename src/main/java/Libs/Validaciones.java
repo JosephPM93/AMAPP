@@ -22,6 +22,7 @@ public class Validaciones {
     }
     /**
      * Metodo para validar si un JDateChooser esta vacio
+     * @param jdc
      * @return boolean 
      **/
     public boolean EsVacio(JDateChooser jdc) {
