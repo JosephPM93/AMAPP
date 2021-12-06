@@ -22,6 +22,10 @@ public class DetallesPersonaVista extends javax.swing.JDialog {
         this.setResizable(false);
     }
 
+    /**
+     *
+     * @param caso
+     */
     public DetallesPersonaVista(Persona caso) {
         initComponents();
         this.setLocationRelativeTo(null);

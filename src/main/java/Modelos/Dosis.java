@@ -24,15 +24,27 @@ public class Dosis {
     @Column(name = "Nombre")
     private String Nombre;
     
+    /**
+     *
+     * @param Id
+     * @param Nombre
+     */
     public Dosis(int Id, String Nombre) {
         this.Id = Id;
         this.Nombre = Nombre;
     }
 
+    /**
+     *
+     * @param Nombre
+     */
     public Dosis(String Nombre) {
         this.Nombre = Nombre;
     }
     
+    /**
+     *
+     */
     public Dosis() {
     }
 

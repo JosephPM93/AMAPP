@@ -30,6 +30,13 @@ public class PersonaPCR {
     @Column(name = "Fecha_realizada")
     private Date Fecha_realizada;
 
+    /**
+     *
+     * @param Id
+     * @param Persona_id
+     * @param Pcr_id
+     * @param Fecha_realizada
+     */
     public PersonaPCR(int Id, int Persona_id, int Pcr_id, Date Fecha_realizada) {
         this.Id = Id;
         this.Persona_id = Persona_id;
@@ -37,12 +44,21 @@ public class PersonaPCR {
         this.Fecha_realizada = Fecha_realizada;
     }
 
+    /**
+     *
+     * @param Persona_id
+     * @param Pcr_id
+     * @param Fecha_realizada
+     */
     public PersonaPCR(int Persona_id, int Pcr_id, Date Fecha_realizada) {
         this.Persona_id = Persona_id;
         this.Pcr_id = Pcr_id;
         this.Fecha_realizada = Fecha_realizada;
     }
     
+    /**
+     *
+     */
     public PersonaPCR() {
     }
 

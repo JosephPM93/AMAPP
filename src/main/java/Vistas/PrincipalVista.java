@@ -66,6 +66,13 @@ public class PrincipalVista extends javax.swing.JFrame {
         this.setLocationRelativeTo(null);
     }
 
+    /**
+     *
+     * @param ListaVacunas
+     * @param ListaPCR
+     * @param ListaDosis
+     * @param ListaPersonas
+     */
     public PrincipalVista(List<Vacuna> ListaVacunas, List<PCR> ListaPCR, List<Dosis> ListaDosis, List<Persona> ListaPersonas) {
         initComponents();
         this.setLocationRelativeTo(null);
@@ -92,6 +99,11 @@ public class PrincipalVista extends javax.swing.JFrame {
         }
     }
 
+    /**
+     *
+     * @param type
+     * @param tabla
+     */
     public void NuevaPCR_Dosis_Vacuna(Object type, String tabla) {
         String Nombre = "";
         while (true) {
@@ -136,6 +148,11 @@ public class PrincipalVista extends javax.swing.JFrame {
         }
     }
 
+    /**
+     *
+     * @param type
+     * @param tabla
+     */
     public void ModificarPCR_Dosis_Vacuna(Object type, String tabla) {
         if ((this.JList_Dosis.getSelectedIndex() != -1 && this.JList_Dosis.getSelectedIndex() != 0)
                 || (this.JList_PCR.getSelectedIndex() != -1 && this.JList_PCR.getSelectedIndex() != 0)
@@ -202,6 +219,11 @@ public class PrincipalVista extends javax.swing.JFrame {
         }
     }
 
+    /**
+     *
+     * @param type
+     * @param tabla
+     */
     public void EliminarPCR_Dosis_Vacuna(Object type, String tabla) {
         if ((this.JList_Dosis.getSelectedIndex() != -1 && this.JList_Dosis.getSelectedIndex() != 0)
                 || (this.JList_PCR.getSelectedIndex() != -1 && this.JList_PCR.getSelectedIndex() != 0)
@@ -364,10 +386,6 @@ public class PrincipalVista extends javax.swing.JFrame {
         JL_tituloRegistros = new javax.swing.JLabel();
         JTF_Refrescar = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
-        jPanel2 = new javax.swing.JPanel();
-        jButton7 = new javax.swing.JButton();
-        jButton8 = new javax.swing.JButton();
-        jButton9 = new javax.swing.JButton();
         jPanel4 = new javax.swing.JPanel();
         jScrollPane3 = new javax.swing.JScrollPane();
         JList_PCR = new javax.swing.JList<>();
@@ -573,38 +591,6 @@ public class PrincipalVista extends javax.swing.JFrame {
         );
 
         JTBP_pestanias.addTab("Registros", JP_registros);
-
-        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Opciones de Usuario"));
-
-        jButton7.setText("Cambiar Contraseña");
-
-        jButton8.setText("Cambiar Nombre");
-
-        jButton9.setText("Cambiar Correo");
-
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButton7)
-                    .addComponent(jButton8)
-                    .addComponent(jButton9))
-                .addContainerGap(82, Short.MAX_VALUE))
-        );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jButton8)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton9)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton7)
-                .addContainerGap(69, Short.MAX_VALUE))
-        );
 
         jPanel4.setBorder(javax.swing.BorderFactory.createTitledBorder("Opciones para PCR"));
 
@@ -815,20 +801,17 @@ public class PrincipalVista extends javax.swing.JFrame {
                 .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(333, Short.MAX_VALUE))
+                .addContainerGap(629, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(0, 418, Short.MAX_VALUE))
+                .addGap(0, 424, Short.MAX_VALUE))
         );
 
         JTBP_pestanias.addTab("Variables de entorno", jPanel3);
@@ -1057,14 +1040,10 @@ public class PrincipalVista extends javax.swing.JFrame {
     private javax.swing.JTabbedPane JTBP_pestanias;
     private javax.swing.JButton JTF_Refrescar;
     private javax.swing.JTable JTable_Personas;
-    private javax.swing.JButton jButton7;
-    private javax.swing.JButton jButton8;
-    private javax.swing.JButton jButton9;
     private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel10;
     private javax.swing.JPanel jPanel11;
-    private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;

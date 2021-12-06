@@ -32,6 +32,14 @@ public class PersonaDosisVacuna {
     @Column(name = "Fecha_puesta")
     private Date Fecha_puesta;
 
+    /**
+     *
+     * @param Id
+     * @param Persona_id
+     * @param Dosis_id
+     * @param Vacuna_id
+     * @param Fecha_puesta
+     */
     public PersonaDosisVacuna(int Id, int Persona_id, int Dosis_id, int Vacuna_id, Date Fecha_puesta) {
         this.Id = Id;
         this.Persona_id = Persona_id;
@@ -40,6 +48,13 @@ public class PersonaDosisVacuna {
         this.Fecha_puesta = Fecha_puesta;
     }
 
+    /**
+     *
+     * @param Persona_id
+     * @param Dosis_id
+     * @param Vacuna_id
+     * @param Fecha_puesta
+     */
     public PersonaDosisVacuna(int Persona_id, int Dosis_id, int Vacuna_id, Date Fecha_puesta) {
         this.Persona_id = Persona_id;
         this.Dosis_id = Dosis_id;
@@ -47,6 +62,9 @@ public class PersonaDosisVacuna {
         this.Fecha_puesta = Fecha_puesta;
     }
 
+    /**
+     *
+     */
     public PersonaDosisVacuna() {
     }
 

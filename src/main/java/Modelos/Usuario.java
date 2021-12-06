@@ -31,6 +31,14 @@ public class Usuario {
     @Column(name = "Email")
     private String Email;
 
+    /**
+     *
+     * @param Id
+     * @param Nombres
+     * @param Apellidos
+     * @param Contrasenia
+     * @param Email
+     */
     public Usuario(int Id, String Nombres, String Apellidos, String Contrasenia, String Email) {
         this.Id = Id;
         this.Nombres = Nombres;
@@ -39,6 +47,13 @@ public class Usuario {
         this.Email = Email;
     }
 
+    /**
+     *
+     * @param Nombres
+     * @param Apellidos
+     * @param Contrasenia
+     * @param Email
+     */
     public Usuario(String Nombres, String Apellidos, String Contrasenia, String Email) {
         this.Nombres = Nombres;
         this.Apellidos = Apellidos;
@@ -46,6 +61,9 @@ public class Usuario {
         this.Email = Email;
     }
 
+    /**
+     *
+     */
     public Usuario() {
     }
 

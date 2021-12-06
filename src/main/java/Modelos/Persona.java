@@ -44,6 +44,20 @@ public class Persona {
     @Column(name = "Fecha_ingreso")
     private Date Fecha_ingreso;
 
+    /**
+     *
+     * @param Id
+     * @param Nombres
+     * @param Apellidos
+     * @param Dui
+     * @param F_nacimiento
+     * @param Sexo
+     * @param Sintomas
+     * @param Recuperado
+     * @param Fallecido
+     * @param Detalles
+     * @param Fecha_ingreso
+     */
     public Persona(int Id, String Nombres, String Apellidos, String Dui, Date F_nacimiento, boolean Sexo, boolean Sintomas, boolean Recuperado, boolean Fallecido, String Detalles, Date Fecha_ingreso) {
         this.Id = Id;
         this.Nombres = Nombres;
@@ -58,6 +72,19 @@ public class Persona {
         this.Fecha_ingreso = Fecha_ingreso;
     }
 
+    /**
+     *
+     * @param Nombres
+     * @param Apellidos
+     * @param Dui
+     * @param F_nacimiento
+     * @param Sexo
+     * @param Sintomas
+     * @param Recuperado
+     * @param Fallecido
+     * @param Detalles
+     * @param Fecha_ingreso
+     */
     public Persona(String Nombres, String Apellidos, String Dui, Date F_nacimiento, boolean Sexo, boolean Sintomas, boolean Recuperado, boolean Fallecido, String Detalles, Date Fecha_ingreso) {
         this.Nombres = Nombres;
         this.Apellidos = Apellidos;
@@ -71,6 +98,9 @@ public class Persona {
         this.Fecha_ingreso = Fecha_ingreso;
     }
     
+    /**
+     *
+     */
     public Persona() {
     }
 

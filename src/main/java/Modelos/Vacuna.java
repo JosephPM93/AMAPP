@@ -25,15 +25,27 @@ public class Vacuna {
     @Column(name = "Nombre")
     private String Nombre;
 
+    /**
+     *
+     * @param Id
+     * @param Nombre
+     */
     public Vacuna(int Id, String Nombre) {
         this.Id = Id;
         this.Nombre = Nombre;
     }
 
+    /**
+     *
+     * @param Nombre
+     */
     public Vacuna(String Nombre) {
         this.Nombre = Nombre;
     }
 
+    /**
+     *
+     */
     public Vacuna() {
     }
 

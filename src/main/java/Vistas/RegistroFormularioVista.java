@@ -15,7 +15,6 @@ import Modelos.Persona;
 import Modelos.PersonaDosisVacuna;
 import Modelos.PersonaPCR;
 import Modelos.Vacuna;
-import com.toedter.calendar.JCalendar;
 import java.util.Date;
 import java.util.List;
 import javax.swing.DefaultComboBoxModel;
@@ -65,6 +64,13 @@ public class RegistroFormularioVista extends javax.swing.JDialog {
         this.setResizable(false);
     }
 
+    /**
+     *
+     * @param ListaVacunas
+     * @param ListaPCR
+     * @param ListaDosis
+     * @param fechaIngreso
+     */
     public RegistroFormularioVista(List<Vacuna> ListaVacunas, List<PCR> ListaPCR, List<Dosis> ListaDosis, Date fechaIngreso) {
         initComponents();
         this.setLocationRelativeTo(null);
@@ -88,6 +94,16 @@ public class RegistroFormularioVista extends javax.swing.JDialog {
         inicializarDatos();
     }
 
+    /**
+     *
+     * @param ListaVacunas
+     * @param ListaPCR
+     * @param ListaDosis
+     * @param casoPersona
+     * @param pdv
+     * @param pcr
+     * @param fechaIngreso
+     */
     public RegistroFormularioVista(List<Vacuna> ListaVacunas, List<PCR> ListaPCR, List<Dosis> ListaDosis, Persona casoPersona, PersonaDosisVacuna pdv, PersonaPCR pcr, Date fechaIngreso) {
         initComponents();
         this.setLocationRelativeTo(null);

@@ -24,15 +24,27 @@ public class PCR {
     @Column(name = "Nombre")
     private String Nombre;
 
+    /**
+     *
+     * @param Id
+     * @param Nombre
+     */
     public PCR(int Id, String Nombre) {
         this.Id = Id;
         this.Nombre = Nombre;
     }
 
+    /**
+     *
+     * @param Nombre
+     */
     public PCR(String Nombre) {
         this.Nombre = Nombre;
     }
     
+    /**
+     *
+     */
     public PCR() {
     }
 
