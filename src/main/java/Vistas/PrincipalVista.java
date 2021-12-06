@@ -63,7 +63,6 @@ public class PrincipalVista extends javax.swing.JFrame {
      */
     public PrincipalVista() {
         initComponents();
-        //InicializarGrafica();
         this.setLocationRelativeTo(null);
     }
 
@@ -81,7 +80,9 @@ public class PrincipalVista extends javax.swing.JFrame {
     }
 
     private void inicializarDatos(List<Vacuna> ListaVacunas, List<PCR> ListaPCR, List<Dosis> ListaDosis, List<Persona> ListaPersonas) {
-
+        jPanel10.setVisible(false);
+        jPanel11.setVisible(false);
+        this.setTitle("AMAPP");
         this.ListaVacunas = ListaVacunas;
         this.ListaPCR = ListaPCR;
         this.ListaDosis = ListaDosis;
@@ -98,6 +99,8 @@ public class PrincipalVista extends javax.swing.JFrame {
         if (ListaPersonas.size() != 0) {
             this.JDC_fechaRegistros.setDate(this.ListaPersonas.get(0).getFecha_ingreso());
         }
+        
+        InicializarGraficas();
     }
 
     /**
@@ -281,7 +284,7 @@ public class PrincipalVista extends javax.swing.JFrame {
       
       ChartPanel panel = new ChartPanel(grafico_barras);
       panel.setMouseWheelEnabled(true);
-      panel.setPreferredSize(new Dimension(150,150));
+      panel.setPreferredSize(new Dimension(350,300));
       
       jPanel8.setLayout(new BorderLayout());
       jPanel8.add(panel, BorderLayout.NORTH);
@@ -289,10 +292,10 @@ public class PrincipalVista extends javax.swing.JFrame {
       
       DefaultPieDataset dcd2 = new DefaultPieDataset();
       datos = estadisticas.personasFallecidas();
-      dcd2.setValue("18-30 anos", datos[0]);
-      dcd2.setValue("30-45 anos", datos[1]);
-      dcd2.setValue("45-60 anos", datos[2]);
-      dcd2.setValue("60-75 anos", datos[3]);
+      dcd2.setValue("18-30 años", datos[0]);
+      dcd2.setValue("30-45 años", datos[1]);
+      dcd2.setValue("45-60 años", datos[2]);
+      dcd2.setValue("60-75 años", datos[3]);
       JFreeChart grafico_barras2 = ChartFactory.createPieChart(
             "Decesos",  //nombre del grafico
             dcd2,  //datos del grafico
@@ -302,7 +305,7 @@ public class PrincipalVista extends javax.swing.JFrame {
       );
       ChartPanel panel2 = new ChartPanel(grafico_barras2);
       panel2.setMouseWheelEnabled(true);
-      panel2.setPreferredSize(new Dimension(150,150));
+      panel2.setPreferredSize(new Dimension(350,300));
       
       jPanel9.setLayout(new BorderLayout());
       jPanel9.add(panel2, BorderLayout.NORTH);
@@ -322,7 +325,7 @@ public class PrincipalVista extends javax.swing.JFrame {
       
       ChartPanel panel3 = new ChartPanel(grafico_pastel);
       panel3.setMouseWheelEnabled(true);
-      panel3.setPreferredSize(new Dimension(150, 150));
+      panel3.setPreferredSize(new Dimension(350, 300));
       
       jPanel11.setLayout(new BorderLayout());
       jPanel11.add(panel3, BorderLayout.NORTH);
@@ -341,7 +344,7 @@ public class PrincipalVista extends javax.swing.JFrame {
       
       ChartPanel panel4 = new ChartPanel(grafico_pastel2);
       panel4.setMouseWheelEnabled(true);
-      panel4.setPreferredSize(new Dimension(150, 150));
+      panel4.setPreferredSize(new Dimension(350, 300));
       
       jPanel10.setLayout(new BorderLayout());
       jPanel10.add(panel4, BorderLayout.NORTH);
@@ -400,79 +403,100 @@ public class PrincipalVista extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jPanel6.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
         JBTN_graficActualizar.setText("Actualizar");
         JBTN_graficActualizar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 JBTN_graficActualizarActionPerformed(evt);
             }
         });
-        jPanel6.add(JBTN_graficActualizar, new org.netbeans.lib.awtextra.AbsoluteConstraints(1140, 40, -1, -1));
-
-        jPanel8.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
         javax.swing.GroupLayout jPanel8Layout = new javax.swing.GroupLayout(jPanel8);
         jPanel8.setLayout(jPanel8Layout);
         jPanel8Layout.setHorizontalGroup(
             jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 198, Short.MAX_VALUE)
+            .addGap(0, 380, Short.MAX_VALUE)
         );
         jPanel8Layout.setVerticalGroup(
             jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 148, Short.MAX_VALUE)
+            .addGap(0, 320, Short.MAX_VALUE)
         );
-
-        jPanel6.add(jPanel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 70, 200, 150));
-
-        jPanel9.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
         javax.swing.GroupLayout jPanel9Layout = new javax.swing.GroupLayout(jPanel9);
         jPanel9.setLayout(jPanel9Layout);
         jPanel9Layout.setHorizontalGroup(
             jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 198, Short.MAX_VALUE)
+            .addGap(0, 380, Short.MAX_VALUE)
         );
         jPanel9Layout.setVerticalGroup(
             jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 148, Short.MAX_VALUE)
+            .addGap(0, 330, Short.MAX_VALUE)
         );
-
-        jPanel6.add(jPanel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 70, 200, 150));
-
-        jPanel10.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
         javax.swing.GroupLayout jPanel10Layout = new javax.swing.GroupLayout(jPanel10);
         jPanel10.setLayout(jPanel10Layout);
         jPanel10Layout.setHorizontalGroup(
             jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 198, Short.MAX_VALUE)
+            .addGap(0, 290, Short.MAX_VALUE)
         );
         jPanel10Layout.setVerticalGroup(
             jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 148, Short.MAX_VALUE)
+            .addGap(0, 170, Short.MAX_VALUE)
         );
-
-        jPanel6.add(jPanel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(890, 70, 200, 150));
-
-        jPanel11.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
         javax.swing.GroupLayout jPanel11Layout = new javax.swing.GroupLayout(jPanel11);
         jPanel11.setLayout(jPanel11Layout);
         jPanel11Layout.setHorizontalGroup(
             jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 198, Short.MAX_VALUE)
+            .addGap(0, 290, Short.MAX_VALUE)
         );
         jPanel11Layout.setVerticalGroup(
             jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 148, Short.MAX_VALUE)
+            .addGap(0, 190, Short.MAX_VALUE)
         );
-
-        jPanel6.add(jPanel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 70, 200, 150));
 
         JL_estadistica.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
         JL_estadistica.setText("Estadisticas");
-        jPanel6.add(JL_estadistica, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 10, -1, -1));
+
+        javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
+        jPanel6.setLayout(jPanel6Layout);
+        jPanel6Layout.setHorizontalGroup(
+            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel6Layout.createSequentialGroup()
+                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel6Layout.createSequentialGroup()
+                        .addGap(230, 230, 230)
+                        .addComponent(jPanel8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(31, 31, 31)
+                        .addComponent(jPanel9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel6Layout.createSequentialGroup()
+                        .addGap(320, 320, 320)
+                        .addComponent(jPanel10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(40, 40, 40)
+                        .addComponent(jPanel11, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(272, 272, Short.MAX_VALUE))
+            .addGroup(jPanel6Layout.createSequentialGroup()
+                .addGap(580, 580, 580)
+                .addComponent(JL_estadistica)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(JBTN_graficActualizar)
+                .addContainerGap())
+        );
+        jPanel6Layout.setVerticalGroup(
+            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel6Layout.createSequentialGroup()
+                .addGap(10, 10, 10)
+                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(JL_estadistica)
+                    .addComponent(JBTN_graficActualizar))
+                .addGap(26, 26, 26)
+                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jPanel9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(10, 10, 10)
+                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jPanel11, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+        );
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -482,9 +506,7 @@ public class PrincipalVista extends javax.swing.JFrame {
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, 552, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 60, Short.MAX_VALUE))
+            .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         JTBP_pestanias.addTab("Estadísticas", jPanel1);
@@ -792,7 +814,7 @@ public class PrincipalVista extends javax.swing.JFrame {
                 .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-            );
+        );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
@@ -1030,10 +1052,6 @@ public class PrincipalVista extends javax.swing.JFrame {
     private javax.swing.JTabbedPane JTBP_pestanias;
     private javax.swing.JButton JTF_Refrescar;
     private javax.swing.JTable JTable_Personas;
-    private javax.swing.JComboBox<String> jComboBox1;
-    private javax.swing.JButton jButton7;
-    private javax.swing.JButton jButton8;
-    private javax.swing.JButton jButton9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel10;
     private javax.swing.JPanel jPanel11;
