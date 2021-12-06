@@ -10,6 +10,7 @@ import Controladores.ConsultasControlador;
 import Controladores.CoreCRUDControlador;
 import Libs.Validaciones;
 import Modelos.Dosis;
+import Libs.Estadistica;
 import Modelos.PCR;
 import Modelos.Persona;
 import Modelos.PersonaDosisVacuna;
@@ -259,20 +260,17 @@ public class PrincipalVista extends javax.swing.JFrame {
         }
     }
 
-    /*public void InicializarGrafica(){
+    public void InicializarGraficas(){
+      Estadistica estadisticas = new Estadistica();
       DefaultCategoryDataset dcd = new DefaultCategoryDataset();
-      int a,r,f;
-      int[] estadisticas = Persona.estadisticas();
-      a = estadisticas[0];
-      r = estadisticas[1];
-      f = estadisticas[2];
+      int[] datos = estadisticas.casosConfirmados();
       
-      dcd.setValue(a,"Activos","Activos");
-      dcd.setValue(r,"Recuperados","Recuperados");
-      dcd.setValue(f,"Fallecidos","Fallecidos");
+      dcd.setValue(datos[0],"Sospechosos","Sospechosos");
+      dcd.setValue(datos[1],"Recuperados","Recuperados");
+      dcd.setValue(datos[2],"Fallecidos","Fallecidos");
       JFreeChart grafico_barras = ChartFactory.createBarChart(
-            "Casos covid 2021",  //nombre del grafico
-            "Estado",  //nombre de las barras o columnas
+            "Casos",  //nombre del grafico
+            "Casos confirmados",
             "Casos",  //nombre de la numeracion
             dcd,  //datos del grafico
             PlotOrientation.VERTICAL,  //orientacion
@@ -287,18 +285,17 @@ public class PrincipalVista extends javax.swing.JFrame {
       
       jPanel8.setLayout(new BorderLayout());
       jPanel8.add(panel, BorderLayout.NORTH);
-      /*
-      ====================================================================
-      *
-      DefaultCategoryDataset dcd2 = new DefaultCategoryDataset();
-      int Decesos = 7;
-      dcd2.setValue(Decesos, "Dato","SiguienteDato");
-      JFreeChart grafico_barras2 = ChartFactory.createBarChart(
-            "DECESOS",  //nombre del grafico
-            "Tiempo",  //nombre de las barras o columnas
-            "Decesos",  //nombre de la numeracion
-            dcd,  //datos del grafico
-            PlotOrientation.VERTICAL,  //orientacion
+      
+      
+      DefaultPieDataset dcd2 = new DefaultPieDataset();
+      datos = estadisticas.personasFallecidas();
+      dcd2.setValue("18-30 anos", datos[0]);
+      dcd2.setValue("30-45 anos", datos[1]);
+      dcd2.setValue("45-60 anos", datos[2]);
+      dcd2.setValue("60-75 anos", datos[3]);
+      JFreeChart grafico_barras2 = ChartFactory.createPieChart(
+            "Decesos",  //nombre del grafico
+            dcd2,  //datos del grafico
             true,  //legenda de barras individuales por color
             true,  //herramientas
             false  //url
@@ -309,9 +306,8 @@ public class PrincipalVista extends javax.swing.JFrame {
       
       jPanel9.setLayout(new BorderLayout());
       jPanel9.add(panel2, BorderLayout.NORTH);
-      /*
-      ====================================================================
-      *
+      
+      
       int CasosGrupoEtario = 2;
       DefaultPieDataset dpd = new DefaultPieDataset();
       dpd.setValue("GraficaPastel",CasosGrupoEtario);
@@ -330,9 +326,7 @@ public class PrincipalVista extends javax.swing.JFrame {
       
       jPanel11.setLayout(new BorderLayout());
       jPanel11.add(panel3, BorderLayout.NORTH);
-      /*
-      ====================================================================
-      *
+      
       int DesesosGrupoEtario = 1;
       DefaultPieDataset dpd2 = new DefaultPieDataset();
       dpd2.setValue("GraficaPastel",DesesosGrupoEtario);
@@ -370,7 +364,6 @@ public class PrincipalVista extends javax.swing.JFrame {
         jPanel6 = new javax.swing.JPanel();
         JBTN_graficActualizar = new javax.swing.JButton();
         jPanel8 = new javax.swing.JPanel();
-        jComboBox1 = new javax.swing.JComboBox<>();
         jPanel9 = new javax.swing.JPanel();
         jPanel10 = new javax.swing.JPanel();
         jPanel11 = new javax.swing.JPanel();
@@ -415,7 +408,7 @@ public class PrincipalVista extends javax.swing.JFrame {
                 JBTN_graficActualizarActionPerformed(evt);
             }
         });
-        jPanel6.add(JBTN_graficActualizar, new org.netbeans.lib.awtextra.AbsoluteConstraints(1160, 40, -1, -1));
+        jPanel6.add(JBTN_graficActualizar, new org.netbeans.lib.awtextra.AbsoluteConstraints(1140, 40, -1, -1));
 
         jPanel8.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
@@ -430,10 +423,7 @@ public class PrincipalVista extends javax.swing.JFrame {
             .addGap(0, 148, Short.MAX_VALUE)
         );
 
-        jPanel6.add(jPanel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 70, 200, 150));
-
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        jPanel6.add(jComboBox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(1260, 40, -1, -1));
+        jPanel6.add(jPanel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 70, 200, 150));
 
         jPanel9.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
@@ -448,7 +438,7 @@ public class PrincipalVista extends javax.swing.JFrame {
             .addGap(0, 148, Short.MAX_VALUE)
         );
 
-        jPanel6.add(jPanel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 70, 200, 150));
+        jPanel6.add(jPanel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 70, 200, 150));
 
         jPanel10.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
@@ -463,7 +453,7 @@ public class PrincipalVista extends javax.swing.JFrame {
             .addGap(0, 148, Short.MAX_VALUE)
         );
 
-        jPanel6.add(jPanel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(940, 70, 200, 150));
+        jPanel6.add(jPanel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(890, 70, 200, 150));
 
         jPanel11.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
@@ -478,9 +468,10 @@ public class PrincipalVista extends javax.swing.JFrame {
             .addGap(0, 148, Short.MAX_VALUE)
         );
 
-        jPanel6.add(jPanel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 70, 200, 150));
+        jPanel6.add(jPanel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 70, 200, 150));
 
-        JL_estadistica.setText("Estadistica");
+        JL_estadistica.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
+        JL_estadistica.setText("Estadisticas");
         jPanel6.add(JL_estadistica, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 10, -1, -1));
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -560,7 +551,7 @@ public class PrincipalVista extends javax.swing.JFrame {
                         .addComponent(JL_tituloRegistros)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(JTF_Refrescar)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 671, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 696, Short.MAX_VALUE)
                         .addComponent(JBTN_nuevo)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(JBTN_modificar)
@@ -800,9 +791,8 @@ public class PrincipalVista extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(629, Short.MAX_VALUE))
-        );
+                .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+            );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
@@ -1012,7 +1002,7 @@ public class PrincipalVista extends javax.swing.JFrame {
 
     private void JBTN_graficActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JBTN_graficActualizarActionPerformed
         // TODO add your handling code here:   
-        // InicializarGrafica();
+        InicializarGraficas();
     }//GEN-LAST:event_JBTN_graficActualizarActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -1041,6 +1031,9 @@ public class PrincipalVista extends javax.swing.JFrame {
     private javax.swing.JButton JTF_Refrescar;
     private javax.swing.JTable JTable_Personas;
     private javax.swing.JComboBox<String> jComboBox1;
+    private javax.swing.JButton jButton7;
+    private javax.swing.JButton jButton8;
+    private javax.swing.JButton jButton9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel10;
     private javax.swing.JPanel jPanel11;
